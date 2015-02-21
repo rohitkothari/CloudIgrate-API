@@ -1,6 +1,8 @@
 package cloudigrate.api.service;
 
+import cloudigrate.api.impl.StorageImpl;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -14,7 +16,7 @@ public class CtoFService {
 		Double fahrenheit;
 		Double celsius = 36.8;
 		fahrenheit = ((celsius * 9) / 5) + 32;
- 
+		System.out.println("Test");
 		String result = "@Produces(\"application/xml\") Output: \n\nC to F Converter Output: \n\n" + fahrenheit;
 		return "<ctofservice>" + "<celsius>" + celsius + "</celsius>" + "<ctofoutput>" + result + "</ctofoutput>" + "</ctofservice>";
 	}
@@ -29,5 +31,17 @@ public class CtoFService {
  
 		String result = "@Produces(\"application/xml\") Output: \n\nC to F Converter Output: \n\n" + fahrenheit;
 		return "<ctofservice>" + "<celsius>" + celsius + "</celsius>" + "<ctofoutput>" + result + "</ctofoutput>" + "</ctofservice>";
+	}
+	
+	@Path("/bucket/{bucket}")
+	@GET
+	@Produces("application/xml")
+	public String createBucket(@PathParam("bucket") String s) {
+		
+		System.out.println("Inside bucket:"+s);
+		StorageImpl storage = new StorageImpl();
+		storage.authenticateAWS();
+		storage.createAWSBucket(s);
+		return "Bucket created successfully";
 	}
 }
