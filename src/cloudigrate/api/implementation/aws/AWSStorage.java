@@ -18,7 +18,7 @@ import cloudigrate.api.implementation.aws.InitializeAWS;
 public class AWSStorage {
 
 	// We need S3Client to communicate with actual AWS Console 
-	AmazonS3 s3Client = null;
+	AmazonS3Client s3Client = null;
 	AWSCredentials credentials = null;
 
 	// Constructor that initializes the AWS Storage component - See InitializeAWS.java for more details
