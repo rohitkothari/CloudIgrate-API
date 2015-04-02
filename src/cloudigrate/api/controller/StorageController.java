@@ -4,7 +4,10 @@
 
 package cloudigrate.api.controller;
 
+import java.io.File;
+
 import cloudigrate.api.facade.*;
+
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -50,6 +53,18 @@ public class StorageController {
 		storageFacade.createBucket(bucket);
 
 		return "Bucket created successfully";
+	}
+	
+	/*
+	 * 	Upload a new object in a specific bucket}
+	 */
+	@Path("upload/{bucket}")
+	@PUT
+	public String uploadObject(@PathParam("bucket") String bucket, File object) {
+
+		System.out.println("Inside StorageController - uploadObject() with params:"+object.getName()+"-->"+bucket);
+		storageFacade.uploadObject(bucket, object.getName(), object);
+		return "Object uploaded successfully";
 	}
 
 }

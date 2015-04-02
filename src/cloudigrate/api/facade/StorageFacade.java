@@ -4,6 +4,8 @@
 
 package cloudigrate.api.facade;
 
+import java.io.File;
+
 import cloudigrate.api.implementation.*;
 
 public class StorageFacade {
@@ -36,5 +38,15 @@ public class StorageFacade {
 		System.out.println("Inside StorageFacade - createBucket() with params:"+bucketName);
 		// Invoke StorageImpl's createBucket() method
 		storageImpl.createBucket(bucketName, cloudPlatform);
+	}
+	
+	/*
+	 *  Method to upload an object in the pre-configured cloud platform using CloudPlatform enum
+	 */
+	public void uploadObject(String bucketName, String keyName, File object) {
+		System.out.println("Inside StorageFacade - uploadObject() with params:"+bucketName);
+		// Invoke StorageImpl's createBucket() method
+		storageImpl.uploadObject(bucketName, keyName, object, cloudPlatform);
+		
 	}
 }
