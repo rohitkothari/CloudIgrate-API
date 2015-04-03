@@ -3,13 +3,18 @@
  * */
 package cloudigrate.api.implementation;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
+import com.google.api.services.datastore.client.DatastoreException;
+
 import cloudigrate.api.facade.NoSqlFacade.CloudPlatform;
 import cloudigrate.api.implementation.aws.AWSNoSql;
 import cloudigrate.api.implementation.google.GoogleNoSql;
 
 public class NoSqlImpl {
 
-	public void insertItem(String item, String tableName, CloudPlatform cloudPlatform) {
+	public void insertItem(String item, String tableName, CloudPlatform cloudPlatform) throws GeneralSecurityException, IOException, DatastoreException {
 		// TODO Auto-generated method stub
 		
 		switch(cloudPlatform) {
@@ -34,7 +39,7 @@ public class NoSqlImpl {
 	}
 
 	public void getItem(String tableName, String attributeName,
-			String attributeValue, CloudPlatform cloudPlatform) {
+			String attributeValue, CloudPlatform cloudPlatform) throws DatastoreException, GeneralSecurityException, IOException {
 		switch(cloudPlatform) {
 
 		case AWS: 

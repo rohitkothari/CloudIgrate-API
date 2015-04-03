@@ -3,7 +3,12 @@
  * */
 package cloudigrate.api.facade;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import javax.ws.rs.PathParam;
+
+import com.google.api.services.datastore.client.DatastoreException;
 
 import cloudigrate.api.implementation.NoSqlImpl;
 
@@ -24,14 +29,36 @@ public class NoSqlFacade {
 		NoSqlImpl noSqlImpl = new NoSqlImpl();
 		
 		public String insertItem(String item, String tableName){
-			noSqlImpl.insertItem(item, tableName, this.cloudPlatform);
+			try {
+				noSqlImpl.insertItem(item, tableName, this.cloudPlatform);
+			} catch (GeneralSecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DatastoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return item;
 		}
 
 		public void getItem(String tableName, String attributeName,
 				String attributeValue) {
 			// TODO Auto-generated method stub
-			noSqlImpl.getItem(tableName, attributeName, attributeValue, this.cloudPlatform);
+			try {
+				noSqlImpl.getItem(tableName, attributeName, attributeValue, this.cloudPlatform);
+			} catch (DatastoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (GeneralSecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 		}
 
