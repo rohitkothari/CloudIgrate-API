@@ -5,6 +5,8 @@
 package cloudigrate.api.implementation.google;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class GoogleStorage {
@@ -18,5 +20,10 @@ public class GoogleStorage {
 	public void uploadObject(String bucketName, String keyName, File object)
 	{
 		
+	}
+	
+	public File downloadObject(String bucketName, String keyName, String downloadPath) throws FileNotFoundException, IOException
+	{
+		return null;
 	}
 }
