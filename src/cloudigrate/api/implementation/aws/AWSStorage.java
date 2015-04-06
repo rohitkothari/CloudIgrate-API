@@ -70,4 +70,13 @@ public class AWSStorage {
 
 	}
 	
+	// Lowest-level deleteObject() method that makes an API call to AWS Console using S3Client
+		public void deleteObject(String bucketName, String keyName)
+		{
+			System.out.println("Inside AWSStorage - deleteObject()");
+			// Note that the below putObject() method belongs to AWS S3 Java SDK
+			//s3Client.putObject(new PutObjectRequest(bucketName, keyName, object));
+			s3Client.deleteObject(bucketName, keyName);
+		}
+	
 }

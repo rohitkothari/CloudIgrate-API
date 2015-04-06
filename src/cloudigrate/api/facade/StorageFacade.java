@@ -61,4 +61,14 @@ public class StorageFacade {
 		File object = storageImpl.downloadObject(bucketName, keyName, downloadPath, cloudPlatform);
 		return object;
 	}
+	
+	/*
+	 *  Method to upload an object in the pre-configured cloud platform using CloudPlatform enum
+	 */
+	public void deleteObject(String bucketName, String keyName) {
+		System.out.println("Inside StorageFacade - deleteObject() with params: deleting "+keyName+" from "+bucketName);
+		// Invoke StorageImpl's createBucket() method
+		storageImpl.deleteObject(bucketName, keyName, cloudPlatform);
+		
+	}
 }
