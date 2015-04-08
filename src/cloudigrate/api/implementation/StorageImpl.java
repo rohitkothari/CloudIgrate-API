@@ -91,8 +91,8 @@ public class StorageImpl {
 
 		case GOOGLE: 
 			System.out.println("Control going inside cloudigrate.api.implementation.google");
-			//GoogleStorage googleStorage = new GoogleStorage();
-			//googleStorage.uploadObject(bucketName, keyName, object);
+			GoogleStorage googleStorage = new GoogleStorage();
+			googleStorage.downloadObject(bucketName, keyName, downloadPath);
 			break;
 
 		default:

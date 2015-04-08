@@ -5,8 +5,8 @@
 package cloudigrate.api.implementation.google;
 
 import java.io.File;
-
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
@@ -114,11 +114,36 @@ public class GoogleStorage {
 	
 	public File downloadObject(String bucketName, String keyName, String downloadPath) throws FileNotFoundException, IOException
 	{
-		return null;
+		File directory = new File(downloadPath);
+		if(!directory.isDirectory()) {
+			try {
+				throw new Exception("Provided destinationDirectory path is not a directory");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		File file = new File(directory.getAbsolutePath() + "/" + keyName);
+		
+		
+		
+		Storage.Objects.Get get = storage.objects().get(bucketName, keyName);
+		FileOutputStream stream = new FileOutputStream(file);
+		try {
+			get.executeAndDownloadTo(stream);
+		} finally {
+			stream.close();
+		}
+		return file;
 	}
 
 	public void deleteObject(String bucketName, String keyName) {
-		
+		try {
+			storage.objects().delete(bucketName, keyName).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }
