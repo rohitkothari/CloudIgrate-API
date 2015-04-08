@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import cloudigrate.api.facade.*;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -78,4 +79,15 @@ public class StorageController {
 		return object;
 	}
 
+	/*
+	 * 	Upload a new object in a specific bucket}
+	 */
+	@Path("{bucket}/{keyName}")
+	@DELETE
+	public String deleteObject(@PathParam("bucket") String bucket, @PathParam("keyName") String keyName) {
+
+		System.out.println("Inside StorageController - deleteObject() with params: deleting "+keyName+"-->"+bucket);
+		storageFacade.deleteObject(bucket, keyName);
+		return "Object deleted successfully";
+	}
 }

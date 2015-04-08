@@ -103,4 +103,33 @@ public class StorageImpl {
 		
 		return object;
 	}
+	
+	public void deleteObject(String bucketName, String keyName, CloudPlatform cloudPlatform){
+
+		System.out.println("Inside StorageImpl - deleteObject() with params:"+bucketName+","+keyName+","+cloudPlatform);
+
+		/* Business logic implementation
+		 * Switch-case usage to implement operations related to cloud platform
+		 */
+
+		switch(cloudPlatform) {
+
+		case AWS: 
+			System.out.println("Control going inside cloudigrate.api.implementation.aws");
+			AWSStorage awsStorage = new AWSStorage();
+			awsStorage.deleteObject(bucketName, keyName);
+			break;
+
+		case GOOGLE: 
+			System.out.println("Control going inside cloudigrate.api.implementation.google");
+			GoogleStorage googleStorage = new GoogleStorage();
+			googleStorage.deleteObject(bucketName, keyName);
+			break;
+
+		default:
+			System.out.println("You have entered invalid business decision for cloud platform");
+			System.out.println("Please verify your FACADE for CloudPlatform enum");
+			break;
+		}
+	}
 }

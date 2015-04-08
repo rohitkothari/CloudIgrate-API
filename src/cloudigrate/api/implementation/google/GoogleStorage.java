@@ -116,4 +116,9 @@ public class GoogleStorage {
 	{
 		return null;
 	}
+
+	public void deleteObject(String bucketName, String keyName) {
+		
+		
+	}
 }
