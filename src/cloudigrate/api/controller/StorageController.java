@@ -5,16 +5,15 @@
 package cloudigrate.api.controller;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import cloudigrate.api.facade.*;
 
-
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 /*
@@ -65,6 +64,18 @@ public class StorageController {
 		System.out.println("Inside StorageController - uploadObject() with params:"+object.getName()+"-->"+bucket);
 		storageFacade.uploadObject(bucket, object.getName(), object);
 		return "Object uploaded successfully";
+	}
+	
+	/*
+	 * 	Download a specific object from a specific bucket to a specified user location}
+	 */
+	@Path("{bucket}")
+	@GET
+	public File downloadObject(@PathParam("bucket") String bucket, String keyName, String downloadPath) throws FileNotFoundException, IOException {
+
+		System.out.println("Inside StorageController - downloadObject() with params: downloading "+keyName+" from "+bucket);
+		File object = storageFacade.downloadObject(bucket, keyName, downloadPath);
+		return object;
 	}
 
 }

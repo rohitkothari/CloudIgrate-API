@@ -5,6 +5,7 @@
 package cloudigrate.api.implementation.google;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +25,9 @@ import com.google.api.services.storage.Storage;
 import com.google.api.services.storage.StorageScopes;
 import com.google.api.services.storage.model.Bucket;
 import com.google.api.services.storage.model.StorageObject;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class GoogleStorage {
@@ -106,5 +110,10 @@ public class GoogleStorage {
 //		finally {
 //			stream.close();
 //		}
+	}
+	
+	public File downloadObject(String bucketName, String keyName, String downloadPath) throws FileNotFoundException, IOException
+	{
+		return null;
 	}
 }

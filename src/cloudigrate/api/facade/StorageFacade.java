@@ -5,6 +5,8 @@
 package cloudigrate.api.facade;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import cloudigrate.api.implementation.*;
 
@@ -49,5 +51,15 @@ public class StorageFacade {
 		// Invoke StorageImpl's createBucket() method
 		storageImpl.uploadObject(bucketName, keyName, object, cloudPlatform);
 		
+	}
+	
+	/*
+	 *  Method to download an object from the pre-configured cloud platform using CloudPlatform enum
+	 */
+	public File downloadObject(String bucketName, String keyName, String downloadPath) throws FileNotFoundException, IOException {
+		System.out.println("Inside StorageFacade - downloadObject() with params: downloading "+keyName+" from "+bucketName);
+		// Invoke StorageImpl's downloadObject() method
+		File object = storageImpl.downloadObject(bucketName, keyName, downloadPath, cloudPlatform);
+		return object;
 	}
 }
