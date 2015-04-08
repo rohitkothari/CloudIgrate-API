@@ -28,7 +28,8 @@ public class StorageFacade {
 
 	// Constructor that sets a particular Cloud Platform Provider 
 	public StorageFacade() {
-		this.cloudPlatform = cloudPlatform.AWS;
+		//this.cloudPlatform = cloudPlatform.AWS;
+		this.cloudPlatform = cloudPlatform.GOOGLE;
 	}
 
 	StorageImpl storageImpl = new StorageImpl();
