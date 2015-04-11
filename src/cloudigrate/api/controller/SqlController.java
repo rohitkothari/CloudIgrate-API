@@ -23,10 +23,10 @@ import javax.ws.rs.core.Response;
 @Path("/sql")
 public class SqlController {
 
-	StorageFacade storageFacade = new StorageFacade();
+	SqlFacade sqlFacade = new SqlFacade();
 
 	/*
-	 *  GET Username at /sql
+	 *  GET WelcomePage at /sql
 	 */
 	@GET
 	public Response welcomeCloudIgrate() {
@@ -34,7 +34,37 @@ public class SqlController {
 		System.out.println("Welcome to CloudIgrate-Sql");
 		return Response.status(200).entity("Welcome to CloudIgrate-Sql").build();
 	}
-
 	
-
+	/*
+	 *  GET UserName at /sql
+	 */
+	@Path("{}")
+	@GET
+	public String getUserName() {
+			System.out.println("Inside SqlController - getUserName()");
+			String userName = sqlFacade.getUserName();
+			return userName;
+		}
+	
+	/*
+	 *  GET UserPassword at /sql
+	 */
+	@Path("{}")
+	@GET
+	public String getUserPasword() {
+		System.out.println("Inside SqlController - getUserPassword()");
+		String userPassword = sqlFacade.getUserPassword();
+		return userPassword;		
+	}
+	
+	/*
+	 *  GET ConnectionString at /sql
+	 */
+	@Path("{}")
+	@GET
+	public String getConnectionString() {
+		System.out.println("Inside SqlController - getPassword()");
+		String userPassword = sqlFacade.getConnectionString();
+		return userPassword;
+	}
 }
