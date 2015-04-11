@@ -35,24 +35,6 @@ public class SqlController {
 		return Response.status(200).entity("Welcome to CloudIgrate-Sql").build();
 	}
 
-	/*
-	 *  GET Password at /sql
-	 */
-	@GET
-	public Response welcomeCloudIgrate() {
-
-		System.out.println("Welcome to CloudIgrate-Sql");
-		return Response.status(200).entity("Welcome to CloudIgrate-Sql").build();
-	}
-
-	/*
-	 *  GET String at /sql
-	 */
-	@GET
-	public Response welcomeCloudIgrate() {
-
-		System.out.println("Welcome to CloudIgrate-Sql");
-		return Response.status(200).entity("Welcome to CloudIgrate-Sql").build();
-	}
+	
 
 }
