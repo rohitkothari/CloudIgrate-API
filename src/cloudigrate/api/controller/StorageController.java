@@ -7,7 +7,10 @@ package cloudigrate.api.controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 
+import cloudigrate.api.domain.Logger;
 import cloudigrate.api.facade.*;
 
 import javax.ws.rs.DELETE;
@@ -29,7 +32,7 @@ import javax.ws.rs.core.Response;
 public class StorageController {
 
 	StorageFacade storageFacade = new StorageFacade();
-
+	Logger logger = null;
 
 	/*
 	 *  GET WelcomePage at /storage
@@ -47,11 +50,13 @@ public class StorageController {
 	@Path("{bucket}")
 	@PUT
 	public String createBucket(@PathParam("bucket") String bucket) {
-
-		System.out.println("Inside StorageController - createBucket() with params:"+bucket);
-
+		logger = Logger.getInstance();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
+		logger.setStart(new Date());
+		System.out.println("Inside StorageController - createBucket() with params:"+bucket);		
 		storageFacade.createBucket(bucket);
-
+		logger.setEnd(new Date());
+		logger.writeLogger("Vab", "createBucket", "AWS", "PaaS");
 		return "Bucket created successfully";
 	}
 	
