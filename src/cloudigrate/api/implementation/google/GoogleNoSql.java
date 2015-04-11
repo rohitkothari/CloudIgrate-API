@@ -6,7 +6,9 @@ package cloudigrate.api.implementation.google;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 import cloudigrate.api.facade.*;
 
@@ -18,7 +20,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import com.amazonaws.services.dynamodb.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.google.api.services.datastore.DatastoreV1;
 import com.google.api.services.datastore.DatastoreV1.BeginTransactionRequest;
 import com.google.api.services.datastore.DatastoreV1.BeginTransactionResponse;
 import com.google.api.services.datastore.DatastoreV1.CommitRequest;
@@ -27,12 +30,22 @@ import com.google.api.services.datastore.DatastoreV1.Key;
 import com.google.api.services.datastore.DatastoreV1.LookupRequest;
 import com.google.api.services.datastore.DatastoreV1.LookupResponse;
 import com.google.api.services.datastore.DatastoreV1.Property;
+import com.google.api.services.datastore.DatastoreV1.Query;
 import com.google.api.services.datastore.DatastoreV1.Value;
 import com.google.api.services.datastore.client.Datastore;
 import com.google.api.services.datastore.client.DatastoreException;
 import com.google.api.services.datastore.client.DatastoreFactory;
 import com.google.api.services.datastore.client.DatastoreOptions;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.files.FileServicePb.DeleteRequest;
 import com.google.protobuf.ByteString;
+
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.PreparedQuery;
 
 public class GoogleNoSql {
 
@@ -59,6 +72,7 @@ public class GoogleNoSql {
 				ByteString tx = tres.getTransaction();
 				// Create an RPC request to get entities by key.
 				LookupRequest.Builder lreq = LookupRequest.newBuilder();
+				
 				// Set the entity key with only one `path_element`: no parent.
 				Key.Builder key = null;
 				// entity at the time the transaction started.
@@ -92,6 +106,7 @@ public class GoogleNoSql {
 		             else
 		            	 entityBuilder.addProperty(Property.newBuilder().setName(attributeName).setValue(Value.newBuilder().setStringValue(value)));
 		            }
+		            //entityBuilder.clearKey();
 		    		// Build the entity.
 		    		entity = entityBuilder.build();
 		    		// Insert the entity in the commit request mutation.
@@ -125,6 +140,7 @@ public class GoogleNoSql {
 		lreq.getReadOptionsBuilder().setTransaction(tx);
 		// Execute the RPC and get the response.
 		LookupResponse lresp = datastore.lookup(lreq.build());
+		
 		// Create an RPC request to commit the transaction.
 		CommitRequest.Builder creq = CommitRequest.newBuilder();
 		// Set the transaction to commit.
@@ -146,4 +162,30 @@ public class GoogleNoSql {
 		}
 	}
 
+
+	public void deleteItem(String tableName, String attributeName) {
+		// TODO Auto-generated method stub
+		//String[] elements = deletedRow.split(",");
+		DatastoreService datastore1 = DatastoreServiceFactory.getDatastoreService();
+		//com.google.appengine.api.datastore.Key[] key = Key.newBuilder().addPathElement(Key.PathElement.newBuilder().setKind("Trivia").setName("CustomerID"));
+		//datastore1.delete(key);
+		 DatastoreV1.Mutation.Builder mutationPb = DatastoreV1.Mutation.newBuilder();
+	      //Set<Key> dedupKeys = new LinkedHashSet<>(Arrays.asList(keys));
+	      //for (Key key1 : dedupKeys) {
+	      //  mutationPb.addDelete(key.toPb());
+	      //}
+	      
+	      DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+			//Query query = new Query();
+			//PreparedQuery pq = datastore.prepare(query);
+			//for (com.google.appengine.api.datastore.Entity entity : pq.asIterable()) {
+			//	datastore.delete(entity.getKey());
+			//}
+	      
+		//for (String element : elements) {
+		//    Key key = KeyFactory.createKey("Row", element);
+		//    datastore.delete(key);
+		
+	}
+	
 }

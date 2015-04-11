@@ -14,7 +14,6 @@ import java.io.IOException;
 
 public class StorageImpl {
 
-
 	public void createBucket(String bucketName, CloudPlatform cloudPlatform){
 
 		System.out.println("Inside StorageImpl - createBucket() with params:"+bucketName+","+cloudPlatform);

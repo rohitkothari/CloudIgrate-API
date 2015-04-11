@@ -59,7 +59,15 @@ public class NoSqlFacade {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 		}
-
+		
+		public void deleteItem(String tableName, String attributeName, String attributeValue)
+		{
+			try {
+				noSqlImpl.deleteItem(tableName, attributeName, attributeValue, this.cloudPlatform);
+			} catch (GeneralSecurityException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 }

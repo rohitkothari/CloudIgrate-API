@@ -3,6 +3,7 @@
  * */
 package cloudigrate.api.controller;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -12,9 +13,7 @@ import cloudigrate.api.facade.NoSqlFacade;
 
 @Path("/nosql")
 public class NoSqlController {
-
 	NoSqlFacade noSqlFacade = new NoSqlFacade();
-	
 	/*
 	 * Put new Item in no SQL
 	 * */	
@@ -39,4 +38,14 @@ public class NoSqlController {
 				noSqlFacade.getItem(tableName, attributeName, attributeValue);
 				return "Getting item successfully";
 			}
-}
+	
+	@Path("{item}")
+	@DELETE
+	public String deleteItem(@PathParam("tableName") String tableName,
+			@PathParam("attributeName") String attributeName,
+			@PathParam("attributeValue") String attributeValue)
+			{
+				noSqlFacade.deleteItem(tableName, attributeName, attributeValue);
+				return null;
+			}
+}		

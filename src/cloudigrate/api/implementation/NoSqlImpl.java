@@ -60,6 +60,28 @@ public class NoSqlImpl {
 			break;
 		}
 		// TODO Auto-generated method stub
+	}
+	
+	public void deleteItem(String tableName, String attributeName, String attributeValue, CloudPlatform cloudPlatform) throws GeneralSecurityException, IOException
+	{
+		switch(cloudPlatform){
 		
+		case AWS:
+			System.out.println("Control going inside cloudigrate.api.implementation.aws");
+			AWSNoSql awsNoSql = new AWSNoSql();
+			awsNoSql.deleteItem(tableName, attributeName, attributeValue);
+			break;
+		
+		case GOOGLE:
+			System.out.println("Control going inside cloudigrate.api.implementation.google");
+			GoogleNoSql googleNoSql = new GoogleNoSql();
+			googleNoSql.deleteItem(tableName, attributeName);
+			break;
+			
+		default:
+			System.out.println("You have entered invalid business decision for cloud platform");
+			System.out.println("Please verify your FACADE for CloudPlatform enum");
+			break;
+		}
 	}
 }
