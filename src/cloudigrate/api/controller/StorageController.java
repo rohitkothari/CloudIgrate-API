@@ -74,10 +74,14 @@ public class StorageController {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@POST
 	public String uploadObject(@PathParam("bucket") String bucket, @FormDataParam("file") File fileobject) {
-
-		System.out.println("Inside StorageController - uploadObject() with params:"+fileobject.getName()+"-->"+bucket);
-		
+		logger = Logger.getInstance();
+		logger.setStart(new Date());
+		System.out.println("Start is " + logger.getStart());
+		System.out.println("Inside StorageController - uploadObject() with params:"+fileobject.getName()+"-->"+bucket);		
 		storageFacade.uploadObject(bucket, fileobject.getName(), fileobject);
+		logger.setEnd(new Date());
+		System.out.println("ENd is " + logger.getEnd());
+		logger.writeLogger("Vab", "uploadObject", "AWS", "PaaS");
 		return "Object uploaded successfully";
 	}
 	
@@ -96,9 +100,14 @@ public class StorageController {
 	@Path("{bucket}")
 	@GET
 	public File downloadObject(@PathParam("bucket") String bucket, String keyName, String downloadPath) throws FileNotFoundException, IOException {
-
+		logger = Logger.getInstance();
+		logger.setStart(new Date());
+		System.out.println("Start is " + logger.getStart());
 		System.out.println("Inside StorageController - downloadObject() with params: downloading "+keyName+" from "+bucket);
 		File object = storageFacade.downloadObject(bucket, keyName, downloadPath);
+		logger.setEnd(new Date());
+		System.out.println("ENd is " + logger.getEnd());
+		logger.writeLogger("Vab", "downloadObject", "AWS", "PaaS");
 		return object;
 	}
 
@@ -108,9 +117,14 @@ public class StorageController {
 	@Path("{bucket}/{keyName}")
 	@DELETE
 	public String deleteObject(@PathParam("bucket") String bucket, @PathParam("keyName") String keyName) {
-
+		logger = Logger.getInstance();
+		logger.setStart(new Date());
+		System.out.println("Start is " + logger.getStart());
 		System.out.println("Inside StorageController - deleteObject() with params: deleting "+keyName+"-->"+bucket);
 		storageFacade.deleteObject(bucket, keyName);
+		logger.setEnd(new Date());
+		System.out.println("ENd is " + logger.getEnd());
+		logger.writeLogger("Vab", "deleteObject", "AWS", "PaaS");
 		return "Object deleted successfully";
 	}
 }
