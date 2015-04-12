@@ -51,7 +51,6 @@ public class StorageController {
 	@PUT
 	public String createBucket(@PathParam("bucket") String bucket) {
 		logger = Logger.getInstance();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
 		logger.setStart(new Date());
 		System.out.println("Inside StorageController - createBucket() with params:"+bucket);		
 		storageFacade.createBucket(bucket);
