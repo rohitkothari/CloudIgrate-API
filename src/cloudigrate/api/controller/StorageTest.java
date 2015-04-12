@@ -29,7 +29,7 @@ public class StorageTest {
 			
 			File object = new File("/Users/rohietkothari/Desktop/trial.txt");
 			System.out.println("Starting upload of file-"+object.getName());
-			sc.uploadObject("cirk29", object);
+//			sc.uploadObject("cirk29", object);
 			
 			break;
 
