@@ -5,7 +5,7 @@ package cloudigrate.api.facade;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-
+import cloudigrate.api.domain.Platform;
 import javax.ws.rs.PathParam;
 
 import com.google.api.services.datastore.client.DatastoreException;
@@ -15,22 +15,23 @@ import cloudigrate.api.implementation.NoSqlImpl;
 public class NoSqlFacade {
 
 	// ENUM to restrict cloud platform provider - You can just add new Cloud Platform Provider here in future
-		public enum CloudPlatform {
-			AWS, GOOGLE
-		}
+		//public enum CloudPlatform {
+		//	AWS, GOOGLE
+		//}
 		
-		private static CloudPlatform cloudPlatform;;
+//		private static CloudPlatform cloudPlatform;;
 
 		// Constructor that sets a particular Cloud Platform Provider 
-		public NoSqlFacade() {
-			this.cloudPlatform = cloudPlatform.AWS;
-		}
+		//public NoSqlFacade() {
+		//	this.cloudPlatform = Platform.getInstance().getPlatformValue("nosql");
+			//this.cloudPlatform = Platform.getInstance().getPlatformValue("nosql");
+		//}
 		
 		NoSqlImpl noSqlImpl = new NoSqlImpl();
 		
 		public String insertItem(String item, String tableName){
 			try {
-				noSqlImpl.insertItem(item, tableName, this.cloudPlatform);
+				noSqlImpl.insertItem(item, tableName);
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -48,7 +49,7 @@ public class NoSqlFacade {
 				String attributeValue) {
 			// TODO Auto-generated method stub
 			try {
-				noSqlImpl.getItem(tableName, attributeName, attributeValue, this.cloudPlatform);
+				noSqlImpl.getItem(tableName, attributeName, attributeValue);
 			} catch (DatastoreException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

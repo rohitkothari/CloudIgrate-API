@@ -8,16 +8,16 @@ import java.security.GeneralSecurityException;
 
 import com.google.api.services.datastore.client.DatastoreException;
 
-import cloudigrate.api.facade.NoSqlFacade.CloudPlatform;
+import cloudigrate.api.domain.Platform;
 import cloudigrate.api.implementation.aws.AWSNoSql;
 import cloudigrate.api.implementation.google.GoogleNoSql;
 
 public class NoSqlImpl {
 
-	public void insertItem(String item, String tableName, CloudPlatform cloudPlatform) throws GeneralSecurityException, IOException, DatastoreException {
+	public void insertItem(String item, String tableName) throws GeneralSecurityException, IOException, DatastoreException {
 		// TODO Auto-generated method stub
 		
-		switch(cloudPlatform) {
+		switch(Platform.getInstance().getPlatformValue("nosql")) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
@@ -39,8 +39,8 @@ public class NoSqlImpl {
 	}
 
 	public void getItem(String tableName, String attributeName,
-			String attributeValue, CloudPlatform cloudPlatform) throws DatastoreException, GeneralSecurityException, IOException {
-		switch(cloudPlatform) {
+			String attributeValue) throws DatastoreException, GeneralSecurityException, IOException {
+		switch(Platform.getInstance().getPlatformValue("nosql")) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
