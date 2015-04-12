@@ -32,9 +32,24 @@ public class ComputeFacade {
 	ComputeImpl computeimpl = new ComputeImpl();
 	
 	
-	public void createVM(String vmname, String vmdescription){
+	public String createVM(String vmname, String vmdescription){
 		System.out.println("inside computefacade of createVM");
-		computeimpl.createVM(vmname,vmdescription,cloudPlatform);
+		return computeimpl.createVM(vmname,vmdescription,cloudPlatform);
+		
+	}
+	
+	public void stopVM(String instanceId){
+		System.out.println("inside computefacade of stop vm");
+		computeimpl.stopVM(instanceId, cloudPlatform);
+	}
+
+	/**
+	 * @param instanceId
+	 */
+	public void terminateInstance(String instanceId) {
+		// TODO Auto-generated method stub
+		System.out.println("inside computefacade of instance terminate vm");
+		computeimpl.terminateInstance(instanceId, cloudPlatform);
 		
 	}
 
