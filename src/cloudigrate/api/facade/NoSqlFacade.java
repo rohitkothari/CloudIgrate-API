@@ -61,7 +61,7 @@ public class NoSqlFacade {
 			}
 		}
 		
-		public void deleteItem(String tableName, String attributeName, String attributeValue)
+		/*public void deleteItem(String tableName, String attributeName, String attributeValue)
 		{
 				try {
 					noSqlImpl.deleteItem(tableName, attributeName, attributeValue, this.cloudPlatform);
@@ -72,5 +72,5 @@ public class NoSqlFacade {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		}
+		}*/
 }

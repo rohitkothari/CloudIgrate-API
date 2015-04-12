@@ -62,7 +62,7 @@ public class NoSqlImpl {
 		// TODO Auto-generated method stub
 	}
 	
-	public void deleteItem(String tableName, String attributeName, String attributeValue, CloudPlatform cloudPlatform) throws GeneralSecurityException, IOException
+	/*public void deleteItem(String tableName, String attributeName, String attributeValue, CloudPlatform cloudPlatform) throws GeneralSecurityException, IOException
 	{
 		switch(cloudPlatform){
 		
@@ -83,5 +83,5 @@ public class NoSqlImpl {
 			System.out.println("Please verify your FACADE for CloudPlatform enum");
 			break;
 		}
-	}
+	}*/
 }

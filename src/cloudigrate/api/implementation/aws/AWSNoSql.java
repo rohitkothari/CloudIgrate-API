@@ -18,9 +18,9 @@ import com.amazonaws.services.dynamodbv2.model.PutItemRequest;
 import com.amazonaws.services.dynamodbv2.model.PutItemResult;
 import com.amazonaws.services.dynamodbv2.model.ScanRequest;
 import com.amazonaws.services.dynamodbv2.model.ScanResult;
-import com.amazonaws.services.dynamodbv2.document.DeleteItemOutcome;
+/*import com.amazonaws.services.dynamodbv2.document.DeleteItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.Table;*/
 import com.amazonaws.auth.AWSCredentials;
 
 
@@ -28,7 +28,7 @@ public class AWSNoSql {
 
 		// We need DynamoDB to communicate with actual AWS Console 
 		AmazonDynamoDBClient dynamoDB = null;
-		DynamoDB dynamoDB1 = null;
+//		DynamoDB dynamoDB1 = null;
 		AWSCredentials credentials = null;
 
 		// Constructor that initializes the AWS DynamoDB component - See InitializeAWS.java for more details
@@ -37,7 +37,7 @@ public class AWSNoSql {
 		{
 			credentials = InitializeAWS.getCredentials();
 			dynamoDB = new AmazonDynamoDBClient(credentials);
-			dynamoDB1 =  new DynamoDB(dynamoDB);
+//			dynamoDB1 =  new DynamoDB(dynamoDB);
 			Region usWest2 = Region.getRegion(Regions.US_WEST_1);
 			dynamoDB.setRegion(usWest2);
 		}
@@ -64,10 +64,10 @@ public class AWSNoSql {
 			ScanResult scanResult = dynamoDB.scan(scanRequest);
 		}
 		
-		public void deleteItem(String tableName, String attributeName, String attributeValue)
+		/*public void deleteItem(String tableName, String attributeName, String attributeValue)
 		{
 			 //Table table = (tableName);
 			Table table = dynamoDB1.getTable(tableName);
 			DeleteItemOutcome outcome = table.deleteItem(attributeName, attributeValue);
-		}
+		}*/
 }

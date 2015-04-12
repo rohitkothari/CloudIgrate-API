@@ -38,7 +38,7 @@ public class SqlController {
 	/*
 	 *  GET UserName at /sql
 	 */
-	@Path("{}")
+	@Path("username")
 	@GET
 	public String getUserName() {
 			System.out.println("Inside SqlController - getUserName()");
@@ -49,7 +49,7 @@ public class SqlController {
 	/*
 	 *  GET UserPassword at /sql
 	 */
-	@Path("{}")
+	@Path("password")
 	@GET
 	public String getUserPasword() {
 		System.out.println("Inside SqlController - getUserPassword()");
@@ -60,7 +60,7 @@ public class SqlController {
 	/*
 	 *  GET ConnectionString at /sql
 	 */
-	@Path("{}")
+	@Path("connection")
 	@GET
 	public String getConnectionString() {
 		System.out.println("Inside SqlController - getPassword()");
