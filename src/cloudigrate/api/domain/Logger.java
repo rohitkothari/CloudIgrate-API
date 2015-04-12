@@ -21,12 +21,6 @@ public class Logger {
 		   public static Logger getInstance() {
 		      if(logger == null) {
 		    	  logger = new Logger();
-		    	  try {
-					fstream = new FileWriter("log.txt", true);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} //true tells to append data.;
 		      }
 		      return logger;
 		   }
@@ -37,8 +31,11 @@ public class Logger {
 			   writeInput = user + "," + method + ',' + platform + ',' + level + ',' + this.getStart() + ',' + this.getEnd() + ',' + timeStamp ; 
 			   try  
 			   {
-			       out = new BufferedWriter(fstream);
-			       out.write("\n"+ writeInput);
+				   fstream = new FileWriter("/tmp/log.txt", true);
+				   out = new BufferedWriter(fstream);
+			       System.out.println(writeInput);
+			      out.write("\n"+ writeInput);
+			       //out.write(writeInput);
 			       writeInput = "";
 			   }
 			   catch (IOException e)

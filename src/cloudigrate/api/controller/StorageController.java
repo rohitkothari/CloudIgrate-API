@@ -58,9 +58,11 @@ public class StorageController {
 	public String createBucket(@PathParam("bucket") String bucket) {
 		logger = Logger.getInstance();
 		logger.setStart(new Date());
+		System.out.println("Start is " + logger.getStart());
 		System.out.println("Inside StorageController - createBucket() with params:"+bucket);		
 		storageFacade.createBucket(bucket);
 		logger.setEnd(new Date());
+		System.out.println("ENd is " + logger.getEnd());
 		logger.writeLogger("Vab", "createBucket", "AWS", "PaaS");
 		return "Bucket created successfully";
 	}
