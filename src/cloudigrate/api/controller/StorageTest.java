@@ -15,6 +15,7 @@ public class StorageTest {
 		int choice=0;
 		
 		Scanner userIn = new Scanner(System.in);
+		System.out.println("test");
 		System.out.println("Storage Tests- Select one choice of the following:");
 		System.out.println("1. Test uploadObject()");
 		System.out.println("2. Test downloadObject()");
