@@ -7,15 +7,24 @@ package cloudigrate.api.controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 
+import cloudigrate.api.domain.Logger;
 import cloudigrate.api.facade.*;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.sun.jersey.core.header.FormDataContentDisposition;
+import com.sun.jersey.multipart.*;
 
 /*
  * Controller for delegating all requests pertaining to STORAGE component of CloudIgrate.net
@@ -29,7 +38,7 @@ import javax.ws.rs.core.Response;
 public class StorageController {
 
 	StorageFacade storageFacade = new StorageFacade();
-
+	Logger logger = null;
 
 	/*
 	 *  GET WelcomePage at /storage
@@ -47,25 +56,39 @@ public class StorageController {
 	@Path("{bucket}")
 	@PUT
 	public String createBucket(@PathParam("bucket") String bucket) {
-
-		System.out.println("Inside StorageController - createBucket() with params:"+bucket);
-
+		logger = Logger.getInstance();
+		logger.setStart(new Date());
+		System.out.println("Start is " + logger.getStart());
+		System.out.println("Inside StorageController - createBucket() with params:"+bucket);		
 		storageFacade.createBucket(bucket);
-
+		logger.setEnd(new Date());
+		System.out.println("ENd is " + logger.getEnd());
+		logger.writeLogger("Vab", "createBucket", "AWS", "PaaS");
 		return "Bucket created successfully";
 	}
 	
 	/*
-	 * 	Upload a new object in a specific bucket}
+	 * 	REST Updated code: Upload a new object in a specific bucket}
 	 */
 	@Path("upload/{bucket}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@POST
+	public String uploadObject(@PathParam("bucket") String bucket, @FormDataParam("file") File fileobject) {
+
+		System.out.println("Inside StorageController - uploadObject() with params:"+fileobject.getName()+"-->"+bucket);
+		
+		storageFacade.uploadObject(bucket, fileobject.getName(), fileobject);
+		return "Object uploaded successfully";
+	}
+	
+	/*@Path("upload/{bucket}")
 	@PUT
 	public String uploadObject(@PathParam("bucket") String bucket, File object) {
 
 		System.out.println("Inside StorageController - uploadObject() with params:"+object.getName()+"-->"+bucket);
 		storageFacade.uploadObject(bucket, object.getName(), object);
 		return "Object uploaded successfully";
-	}
+	}*/
 	
 	/*
 	 * 	Download a specific object from a specific bucket to a specified user location}

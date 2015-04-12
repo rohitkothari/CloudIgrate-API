@@ -38,6 +38,7 @@ public class SqlController {
 	/*
 	 *  GET UserName at /sql
 	 */
+
 	@Path("/username")
 	@GET
 	public String getUserName() {
@@ -48,6 +49,7 @@ public class SqlController {
 	/*
 	 *  GET UserPassword at /sql
 	 */
+
 	@Path("/userpassword")
 	@GET
 	public String getUserPasword() {
@@ -58,6 +60,7 @@ public class SqlController {
 	/*
 	 *  GET ConnectionString at /sql
 	 */
+
 	@Path("/connectionstring")
 	@GET
 	public String getConnectionString() {
