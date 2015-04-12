@@ -38,33 +38,30 @@ public class SqlController {
 	/*
 	 *  GET UserName at /sql
 	 */
-	@Path("{}")
+	@Path("/username")
 	@GET
 	public String getUserName() {
 			System.out.println("Inside SqlController - getUserName()");
-			String userName = sqlFacade.getUserName();
-			return userName;
+			return sqlFacade.getUserName();			
 		}
 	
 	/*
 	 *  GET UserPassword at /sql
 	 */
-	@Path("{}")
+	@Path("/userpassword")
 	@GET
 	public String getUserPasword() {
 		System.out.println("Inside SqlController - getUserPassword()");
-		String userPassword = sqlFacade.getUserPassword();
-		return userPassword;		
+		return sqlFacade.getUserPassword();		
 	}
 	
 	/*
 	 *  GET ConnectionString at /sql
 	 */
-	@Path("{}")
+	@Path("/connectionstring")
 	@GET
 	public String getConnectionString() {
 		System.out.println("Inside SqlController - getPassword()");
-		String userPassword = sqlFacade.getConnectionString();
-		return userPassword;
+		return sqlFacade.getConnectionString();		
 	}
 }

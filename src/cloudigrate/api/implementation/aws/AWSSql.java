@@ -1,5 +1,5 @@
 /*
- * Author: Rohit Kothari
+ * Author: Ashutosh Folane
  */
 
 package cloudigrate.api.implementation.aws;
@@ -20,34 +20,33 @@ import cloudigrate.api.implementation.aws.InitializeAWS;
  */
 public class AWSSql {
 	
+	String userName;
+	String userPassword;
+	String connectionString;
+	
 	public AWSSql()
 	{
-		final String userName = "";
-		final String password = "";
-		final String connectionString = "";
+		userName = "cloudigrate";
+		userPassword = "cloudigrate";
+		connectionString = "cloudigrate.c7babyv2jgia.us-west-2.rds.amazonaws.com";
 	}
 		// Lowest-level getUserName() method that makes an API call to AWS Console using RDS endpoint
 		public String getUserName()
 		{
-			System.out.println("Inside AWSSql - getUserName()");
-			String userName = ""; 
-			return userName;
-			
+			System.out.println("Inside AWSSql - getUserName()");				
+			return userName;			
 		}
 		
 		public String getUserPassword()
 		{
-			System.out.println("Inside AWSSql - getUserPassword()");
-			String userPassword = ""; 
+			System.out.println("Inside AWSSql - getUserPassword()");			
 			return userPassword;
 			
 		}
 		
 		public String getConnectionString()
 		{
-			System.out.println("Inside AWSSql - getConnectionString()");
-			String connectionString = ""; 
-			return connectionString;
-			
+			System.out.println("Inside AWSSql - getConnectionString()");			
+			return connectionString;			
 		}
 }

@@ -29,7 +29,7 @@ public class SqlFacade {
 	// Constructor that sets a particular Cloud Platform Provider 
 	public SqlFacade() {
 		//this.cloudPlatform = cloudPlatform.AWS;
-		this.cloudPlatform = cloudPlatform.GOOGLE;
+		this.cloudPlatform = cloudPlatform.AWS;
 	}
 
 	SqlImpl sqlImpl = new SqlImpl();
@@ -40,21 +40,18 @@ public class SqlFacade {
 	public String getUserName() {
 		System.out.println("Inside SqlFacade - getUserName()");
 		// Invoke SqlImpl's getUserName() method
-		String userName = sqlImpl.getUserName(cloudPlatform);
-		return userName;
+		return  sqlImpl.getUserName(cloudPlatform);
 	}	
 	
 	public String getUserPassword() {
 		System.out.println("Inside SqlFacade - getUserPassword()");
 		// Invoke SqlImpl's getUserPassword() method
-		String userUserPassword = sqlImpl.getUserPassword(cloudPlatform);
-		return userUserPassword;
+		return sqlImpl.getUserPassword(cloudPlatform);		
 	}
 	
 	public String getConnectionString() {
 		System.out.println("Inside SqlFacade - getConnectionString()");
 		// Invoke SqlImpl's createBucket() method
-		String connectionString = sqlImpl.getConnectionString(cloudPlatform);
-		return connectionString;
+		return sqlImpl.getConnectionString(cloudPlatform);		
 	}
 }

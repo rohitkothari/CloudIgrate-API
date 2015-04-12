@@ -30,22 +30,39 @@ import com.google.api.services.storage.model.StorageObject;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 */
-
-public class GoogleSql {
-
-	public String getUserName() {
-		// 
-		return null;
-	}
-
-	public String getUserPassword() {
-		// 
-		return null;
-	}
-
-	public String getConnectionString() {
-		// 
-		return null;
-	}
-}
 	
+/*
+ *  Lower level implementation class for SQL - Google (CloudSQL)
+ */
+public class GoogleSql {
+	
+	String userName;
+	String userPassword ;
+	String connectionString;
+	
+	public GoogleSql()
+	{
+		userName = "cloudigrate";
+		userPassword = "cloudigrate";
+		connectionString = "173.194.107.103";
+	}
+		// Lowest-level getUserName() method that makes an API call to AWS Console using RDS endpoint
+		public String getUserName()
+		{
+			System.out.println("Inside GoogleSql - getUserName()");				
+			return userName;			
+		}
+		
+		public String getUserPassword()
+		{
+			System.out.println("Inside GoogleSql - getUserPassword()");			
+			return userPassword;
+		}
+		
+		public String getConnectionString()
+		{
+			System.out.println("Inside GoogleSql - getConnectionString()");			
+			return connectionString;
+			
+		}
+}

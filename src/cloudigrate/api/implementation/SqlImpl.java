@@ -27,16 +27,12 @@ public class SqlImpl {
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
 			AWSSql awsSql = new AWSSql();
-			userName = awsSql.getUserName();
-			return userName;
-		
+			return awsSql.getUserName();					
 
 		case GOOGLE: 
 			System.out.println("Control going inside cloudigrate.api.implementation.google");
 			GoogleSql googleSql = new GoogleSql();
-			userName = googleSql.getUserName();
-			return userName;
-		
+			return googleSql.getUserName();
 
 		default:
 			System.out.println("You have entered invalid business decision for cloud platform");
@@ -59,16 +55,12 @@ public class SqlImpl {
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
 			AWSSql awsSql = new AWSSql();
-			userPassword = awsSql.getUserPassword();
-			return userPassword;
-		
+			return awsSql.getUserPassword();					
 
 		case GOOGLE: 
 			System.out.println("Control going inside cloudigrate.api.implementation.google");
 			GoogleSql googleSql = new GoogleSql();
-			userPassword = googleSql.getUserPassword();
-			return userPassword;
-		
+			return googleSql.getUserPassword();					
 
 		default:
 			System.out.println("You have entered invalid business decision for cloud platform");
@@ -90,16 +82,12 @@ public class SqlImpl {
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
 			AWSSql awsSql = new AWSSql();
-			connectionString = awsSql.getConnectionString();
-			return connectionString;
-		
+			return awsSql.getConnectionString();					
 
 		case GOOGLE: 
 			System.out.println("Control going inside cloudigrate.api.implementation.google");
 			GoogleSql googleSql = new GoogleSql();
-			connectionString = googleSql.getConnectionString();
-			return connectionString;
-		
+			return googleSql.getConnectionString();		
 
 		default:
 			System.out.println("You have entered invalid business decision for cloud platform");
