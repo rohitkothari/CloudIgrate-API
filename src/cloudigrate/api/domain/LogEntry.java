@@ -2,6 +2,7 @@ package cloudigrate.api.domain;
 
 public class LogEntry {
 	String userName;
+	String applicationName;
 	String function;
 	String platform;
 	String level;
@@ -9,7 +10,7 @@ public class LogEntry {
 	String end;
 	long timestamp;
 	
-	public LogEntry(String u, String f, String p, String l, String s, String e, long t)
+	public LogEntry(String u, String f, String p, String l, String s, String e, long t, String a)
 	{
 		userName = u;
 		function = f;
@@ -18,8 +19,17 @@ public class LogEntry {
 		start = s;
 		end = e;
 		timestamp = t;
+		applicationName =a;
 	}
 	
+	public String getApplicationName() {
+		return applicationName;
+	}
+
+	public void setApplicationName(String applicationName) {
+		this.applicationName = applicationName;
+	}
+
 	public String getUserName() {
 		return userName;
 	}

@@ -25,10 +25,10 @@ public class Logger {
 		      return logger;
 		   }
 		   
-		   public void writeLogger(String user, String method, String platform,  String level)
+		   public void writeLogger(String user, String applicationName, String method, String platform,  String level)
 		   {
 			   timeStamp = this.getEnd().getTime() - this.getStart().getTime();
-			   writeInput = user + "," + method + ',' + platform + ',' + level + ',' + this.getStart() + ',' + this.getEnd() + ',' + timeStamp ; 
+			   writeInput = user + "," + method + ',' + platform + ',' + level + ',' + this.getStart() + ',' + this.getEnd() + ',' + timeStamp + ',' + applicationName ; 
 			   try  
 			   {
 				   fstream = new FileWriter("/tmp/log.txt", true);
