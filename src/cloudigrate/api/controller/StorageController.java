@@ -23,6 +23,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -60,7 +61,8 @@ public class StorageController {
 	@Path("{bucket}")
 	@PUT
 	public String createBucket(@PathParam("bucket") String bucket,
-			@PathParam("authKey") String authKey) {
+			@QueryParam("authKey") String authKey) {
+		System.out.println("AuthKey from query: "+authKey);
 		logger = Logger.getInstance();
 		logger.setStart(new Date());
 		AuthenticationFacade authFacade = new AuthenticationFacade();
