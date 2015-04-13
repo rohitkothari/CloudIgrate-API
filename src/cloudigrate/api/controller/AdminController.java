@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
 import cloudigrate.api.domain.Platform;
+import cloudigrate.api.facade.DashboardFacade;
 
 @Path("/admin")
 public class AdminController {
@@ -27,7 +28,9 @@ public class AdminController {
 	@Path("/dashboard")
 	@GET
 	public String getDashboard() {
-		return "Get dashboard successfully";
+		DashboardFacade dashboardFacade = new DashboardFacade();
+		return dashboardFacade.getDashboardData();
+		//return "Get dashboard successfully";
 	}
 	
 }
