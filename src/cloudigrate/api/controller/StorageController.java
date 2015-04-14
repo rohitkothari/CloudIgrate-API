@@ -86,7 +86,7 @@ public class StorageController {
 			iterator = myMap.entrySet().iterator();
 		    while (iterator.hasNext()) {
 		    	pair = (Map.Entry)iterator.next();
-		        logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "createBucket", "AWS", "PaaS");
+		        logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "createBucket", "AWS", "storage", "PaaS");
 		        iterator.remove(); // avoids a ConcurrentModificationException
 		    }
 			
@@ -120,7 +120,7 @@ public class StorageController {
 		iterator = myMap.entrySet().iterator();
 	    while (iterator.hasNext()) {
 	    	pair = (Map.Entry)iterator.next();
-	    	logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "uploadObject", "AWS","PaaS");
+	    	logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "uploadObject", "AWS", "storage","PaaS");
 	    	iterator.remove(); // avoids a ConcurrentModificationException
 	    }
 	    return "Object uploaded successfully";
@@ -167,7 +167,7 @@ public class StorageController {
 		iterator = myMap.entrySet().iterator();
 	    while (iterator.hasNext()) {
 	    	pair = (Map.Entry)iterator.next();
-	    	logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "downloadObject", "AWS","PaaS");
+	    	logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "downloadObject", "AWS", "storage","PaaS");
 	    	iterator.remove(); // avoids a ConcurrentModificationException
 	    }
 		return object;
@@ -197,11 +197,11 @@ public class StorageController {
 		logger.setEnd(new Date());
 		System.out.println("ENd is " + logger.getEnd());
 		logger.writeLogger("Vab", "applicatioName", "createBucket", "AWS",
-				"PaaS");
+				"storage", "PaaS");
 		iterator = myMap.entrySet().iterator();
 	    while (iterator.hasNext()) {
 	    	pair = (Map.Entry)iterator.next();
-	    	logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "downloadObject", "AWS","PaaS");
+	    	logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "downloadObject", "AWS", "storage","PaaS");
 	    	iterator.remove(); // avoids a ConcurrentModificationException
 	    }
 		return "Object deleted successfully";

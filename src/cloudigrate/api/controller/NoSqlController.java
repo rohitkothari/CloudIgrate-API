@@ -56,7 +56,7 @@ public class NoSqlController {
 		iterator = myMap.entrySet().iterator();
 	    while (iterator.hasNext()) {
 	    	pair = (Map.Entry)iterator.next();
-	        logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "insertItem", "AWS", "PaaS");
+	        logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "insertItem", "AWS", "nosql", "PaaS");
 	        iterator.remove(); // avoids a ConcurrentModificationException
 	    }
 		return "Item inserted successfuly";
@@ -90,7 +90,7 @@ public class NoSqlController {
 				iterator = myMap.entrySet().iterator();
 			    while (iterator.hasNext()) {
 			    	pair = (Map.Entry)iterator.next();
-			        logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "getItem", "AWS", "PaaS");
+			        logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "getItem", "AWS", "nosql", "PaaS");
 			        iterator.remove(); // avoids a ConcurrentModificationException
 			    }
 				return "Getting item successfully";

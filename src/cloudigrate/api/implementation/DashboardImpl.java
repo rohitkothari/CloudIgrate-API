@@ -35,7 +35,7 @@ public class DashboardImpl {
 				String[] entries = line.split(cvsSplitBy);
 				System.out.println("Count is"+ entries.length);
 				if(entries.length > 2)
-				logEntries.add(new LogEntry(entries[0], entries[1], entries[2], entries[3],entries[4], entries[5], Long.parseLong(entries[6]), entries[7]));
+				logEntries.add(new LogEntry(entries[0], entries[1], entries[2], entries[3],entries[4], entries[5], Long.parseLong(entries[6]), entries[7], entries[8]));
 			}
 		ObjectMapper objMapper = new ObjectMapper();
 		jsonString = objMapper.writeValueAsString(logEntries);

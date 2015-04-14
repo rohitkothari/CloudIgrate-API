@@ -9,8 +9,9 @@ public class LogEntry {
 	String start;
 	String end;
 	long timestamp;
+	String service;
 	
-	public LogEntry(String u, String f, String p, String l, String s, String e, long t, String a)
+	public LogEntry(String u, String f, String p, String l, String s, String e, long t, String a, String sv)
 	{
 		userName = u;
 		function = f;
@@ -20,8 +21,17 @@ public class LogEntry {
 		end = e;
 		timestamp = t;
 		applicationName =a;
+		service = sv;
 	}
 	
+	public String getService() {
+		return service;
+	}
+
+	public void setService(String service) {
+		this.service = service;
+	}
+
 	public String getApplicationName() {
 		return applicationName;
 	}
