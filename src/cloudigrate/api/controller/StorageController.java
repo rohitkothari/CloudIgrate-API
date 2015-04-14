@@ -42,8 +42,13 @@ import com.sun.jersey.multipart.*;
 public class StorageController {
 
 	StorageFacade storageFacade = new StorageFacade();
+	AuthenticationFacade authFacade = new AuthenticationFacade();
 	Logger logger = null;
-
+	HashMap<String, String> myMap = null;
+	Iterator iterator = null;
+	int keyId = 0;
+	Map.Entry pair = null;
+	
 	/*
 	 * GET WelcomePage at /storage
 	 */
@@ -63,14 +68,11 @@ public class StorageController {
 	public String createBucket(@PathParam("bucket") String bucket,
 			@QueryParam("authKey") String authKey) {
 		System.out.println("AuthKey from query: "+authKey);
-		logger = Logger.getInstance();
-		logger.setStart(new Date());
-		AuthenticationFacade authFacade = new AuthenticationFacade();
-		HashMap<String, String> myMap = null;
-		Iterator iterator = null;
-		int keyId = authFacade.isValidKey(authKey);
+		keyId = authFacade.isValidKey(authKey);
 		if(keyId > 0)
 		{
+		logger = Logger.getInstance();
+		logger.setStart(new Date());
 			myMap = authFacade.getLogInfo(keyId);
 			
 			System.out.println("Start is " + logger.getStart());
@@ -83,7 +85,7 @@ public class StorageController {
 			
 			iterator = myMap.entrySet().iterator();
 		    while (iterator.hasNext()) {
-		    	Map.Entry pair = (Map.Entry)iterator.next();
+		    	pair = (Map.Entry)iterator.next();
 		        logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "createBucket", "AWS", "PaaS");
 		        iterator.remove(); // avoids a ConcurrentModificationException
 		    }
@@ -100,9 +102,14 @@ public class StorageController {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@POST
 	public String uploadObject(@PathParam("bucket") String bucket,
-			@FormDataParam("file") File fileobject) {
+			@FormDataParam("file") File fileobject,
+			@QueryParam("authKey") String authKey) {
+		keyId = authFacade.isValidKey(authKey);
+		if(keyId > 0)
+		{
 		logger = Logger.getInstance();
 		logger.setStart(new Date());
+		myMap = authFacade.getLogInfo(keyId);
 		System.out.println("Start is " + logger.getStart());
 		System.out
 				.println("Inside StorageController - uploadObject() with params:"
@@ -110,9 +117,15 @@ public class StorageController {
 		storageFacade.uploadObject(bucket, fileobject.getName(), fileobject);
 		logger.setEnd(new Date());
 		System.out.println("ENd is " + logger.getEnd());
-		logger.writeLogger("Vab", "applicatioName", "createBucket", "AWS",
-				"PaaS");
-		return "Object uploaded successfully";
+		iterator = myMap.entrySet().iterator();
+	    while (iterator.hasNext()) {
+	    	pair = (Map.Entry)iterator.next();
+	    	logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "uploadObject", "AWS","PaaS");
+	    	iterator.remove(); // avoids a ConcurrentModificationException
+	    }
+	    return "Object uploaded successfully";
+	}
+	return "Key is not Valid";
 	}
 
 	/*
@@ -133,10 +146,15 @@ public class StorageController {
 	@Path("{bucket}")
 	@GET
 	public File downloadObject(@PathParam("bucket") String bucket,
-			String keyName, String downloadPath) throws FileNotFoundException,
+			String keyName, String downloadPath,
+			@QueryParam("authKey") String authKey) throws FileNotFoundException,
 			IOException {
+		keyId = authFacade.isValidKey(authKey);
+		if(keyId > 0)
+		{
 		logger = Logger.getInstance();
 		logger.setStart(new Date());
+			myMap = authFacade.getLogInfo(keyId);
 		System.out.println("Start is " + logger.getStart());
 		System.out
 				.println("Inside StorageController - downloadObject() with params: downloading "
@@ -145,9 +163,16 @@ public class StorageController {
 				downloadPath);
 		logger.setEnd(new Date());
 		System.out.println("ENd is " + logger.getEnd());
-		logger.writeLogger("Vab", "applicatioName", "createBucket", "AWS",
-				"PaaS");
+		
+		iterator = myMap.entrySet().iterator();
+	    while (iterator.hasNext()) {
+	    	pair = (Map.Entry)iterator.next();
+	    	logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "downloadObject", "AWS","PaaS");
+	    	iterator.remove(); // avoids a ConcurrentModificationException
+	    }
 		return object;
+		}
+		return null;
 	}
 
 	/*
@@ -156,7 +181,12 @@ public class StorageController {
 	@Path("{bucket}/{keyName}")
 	@DELETE
 	public String deleteObject(@PathParam("bucket") String bucket,
-			@PathParam("keyName") String keyName) {
+			@PathParam("keyName") String keyName,
+			@QueryParam("authKey") String authKey) {
+		keyId = authFacade.isValidKey(authKey);
+		if(keyId > 0)
+		{
+		myMap = authFacade.getLogInfo(keyId);
 		logger = Logger.getInstance();
 		logger.setStart(new Date());
 		System.out.println("Start is " + logger.getStart());
@@ -168,6 +198,14 @@ public class StorageController {
 		System.out.println("ENd is " + logger.getEnd());
 		logger.writeLogger("Vab", "applicatioName", "createBucket", "AWS",
 				"PaaS");
+		iterator = myMap.entrySet().iterator();
+	    while (iterator.hasNext()) {
+	    	pair = (Map.Entry)iterator.next();
+	    	logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "downloadObject", "AWS","PaaS");
+	    	iterator.remove(); // avoids a ConcurrentModificationException
+	    }
 		return "Object deleted successfully";
+	}
+		return "Key is not Valid";
 	}
 }

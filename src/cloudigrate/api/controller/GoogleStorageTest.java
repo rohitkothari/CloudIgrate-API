@@ -20,7 +20,7 @@ public class GoogleStorageTest {
 		//sc.createBucket("rohit");
 		//sc.uploadObject("rohit", object);
 		//sc.downloadObject("rohit", "trial.txt", "/Users/rohietkothari/Desktop");
-		sc.deleteObject("rohit", "trial.txt");
+		//sc.deleteObject("rohit", "trial.txt");
 	}
 
 }

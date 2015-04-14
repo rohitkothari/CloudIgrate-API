@@ -41,7 +41,8 @@ public class StorageTest {
 			System.out.println("Testing - downloadObject()");
 			
 			System.out.println("Starting download of file");
-			File file = sc.downloadObject("cirk28", "trial.txt", "/Users/rohietkothari");
+			File file = null;
+			//File file = sc.downloadObject("cirk28", "trial.txt", "/Users/rohietkothari");
 			System.out.println("Filename: "+file.getName());
 			System.out.println("File location: "+file.getCanonicalPath());
 			

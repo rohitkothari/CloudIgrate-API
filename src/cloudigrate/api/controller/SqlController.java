@@ -14,6 +14,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 /*
@@ -41,7 +42,7 @@ public class SqlController {
 
 	@Path("/username")
 	@GET
-	public String getUserName() {
+	public String getUserName(@QueryParam("authKey") String authKey) {
 			System.out.println("Inside SqlController - getUserName()");
 			return sqlFacade.getUserName();			
 		}
@@ -52,7 +53,7 @@ public class SqlController {
 
 	@Path("/userpassword")
 	@GET
-	public String getUserPasword() {
+	public String getUserPasword(@QueryParam("authKey") String authKey) {
 		System.out.println("Inside SqlController - getUserPassword()");
 		return sqlFacade.getUserPassword();		
 	}
@@ -63,7 +64,7 @@ public class SqlController {
 
 	@Path("/connectionstring")
 	@GET
-	public String getConnectionString() {
+	public String getConnectionString(@QueryParam("authKey") String authKey) {
 		System.out.println("Inside SqlController - getPassword()");
 		return sqlFacade.getConnectionString();		
 	}
