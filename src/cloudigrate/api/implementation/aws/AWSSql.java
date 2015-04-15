@@ -28,7 +28,7 @@ public class AWSSql {
 	{
 		userName = "cloudigrate";
 		userPassword = "cloudigrate";
-		connectionString = "cloudigrate.c7babyv2jgia.us-west-2.rds.amazonaws.com";
+		connectionString = "cloudigrate.c7babyv2jgia.us-west-2.rds.amazonaws.com:3306/airbox";
 	}
 		// Lowest-level getUserName() method that makes an API call to AWS Console using RDS endpoint
 		public String getUserName()

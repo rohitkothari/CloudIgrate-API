@@ -96,6 +96,7 @@ public class SqlController {
 			System.out.println("Start is " + logger.getStart());
 		System.out.println("Inside SqlController - getUserPassword()");
 		password = sqlFacade.getUserPassword();
+		logger.setEnd(new Date());
 		iterator = myMap.entrySet().iterator();
 	    while (iterator.hasNext()) {
 	    	pair = (Map.Entry)iterator.next();
@@ -123,10 +124,12 @@ public class SqlController {
 			
 			System.out.println("Start is " + logger.getStart());
 		System.out.println("Inside SqlController - getConnectionString()");
-		connectionString=  sqlFacade.getConnectionString();		
+		connectionString=  sqlFacade.getConnectionString();	
+		logger.setEnd(new Date());
 		iterator = myMap.entrySet().iterator();
 	    while (iterator.hasNext()) {
 	    	pair = (Map.Entry)iterator.next();
+	    	System.out.println("Testing: "+pair.getKey().toString()+ " & "+pair.getValue().toString());
 	        logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "getConnectionString", "AWS", "sql", "PaaS");
 	        iterator.remove(); // avoids a ConcurrentModificationException
 	    }
