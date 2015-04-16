@@ -10,5 +10,14 @@ public class DashboardFacade {
 	{
 		return dashboardImpl.getDashboardData();
 	}
-	
+
+	public String getUserDashboard(String username) {
+		// TODO Auto-generated method stub
+		return dashboardImpl.getUserDashboard(username);
+	}
+
+	public String getServiceDashboard(String service) {
+		// TODO Auto-generated method stub
+		return dashboardImpl.getServiceDashboard(service);
+	}
 }
