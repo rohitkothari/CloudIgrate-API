@@ -341,7 +341,7 @@ public class DashboardImpl {
 				result[1] = jsonAwsServiceRateItemList;
 				result[2] = totalCost.toString();
 //				result1.concat(jsonAwsServiceRateItemList).concat(jsonAwsServiceCostItemList).concat(totalCost.toString());
-				result1 = result[0]+result[1]+result[2];
+				result1 = result[0]+'#'+result[1]+'#'+result[2];
 				System.out.println("Total records parsed: "+recordCounter);
 				System.out.println("Your total bill amount: "+totalCost);
 				System.out.println(jsonAwsServiceCostItemList);
