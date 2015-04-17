@@ -15,11 +15,11 @@ import cloudigrate.api.implementation.NoSqlImpl;
 public class NoSqlFacade {
 
 	// ENUM to restrict cloud platform provider - You can just add new Cloud Platform Provider here in future
-		//public enum CloudPlatform {
-		//	AWS, GOOGLE
-		//}
+		public enum CloudPlatform {
+			AWS, GOOGLE
+		}
 		
-//		private static CloudPlatform cloudPlatform;;
+		private static CloudPlatform cloudPlatform= CloudPlatform.AWS;
 
 		// Constructor that sets a particular Cloud Platform Provider 
 		//public NoSqlFacade() {
@@ -31,7 +31,7 @@ public class NoSqlFacade {
 		
 		public String insertItem(String item, String tableName){
 			try {
-				noSqlImpl.insertItem(item, tableName);
+				noSqlImpl.insertItem(item, tableName, cloudPlatform);
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

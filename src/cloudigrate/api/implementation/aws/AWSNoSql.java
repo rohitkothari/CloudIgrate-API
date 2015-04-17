@@ -44,11 +44,15 @@ public class AWSNoSql {
 
 		public void insertItem(String item1, String tableName) {
 			Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
+			
+			item.put("Id", new AttributeValue().withS("11"));
 			item.put("CustomerId", new AttributeValue().withS("8965"));
+			
 			@SuppressWarnings("deprecation")
-			PutItemRequest putItemRequest = new PutItemRequest(tableName, item);
+			PutItemRequest putItemRequest = new PutItemRequest("CloudIgrate", item);
 			@SuppressWarnings("deprecation")
 			PutItemResult putItemResult = dynamoDB.putItem(putItemRequest);	
+			System.out.println("Item inserted");
 		}
 
 		public void getItem(String tableName, String attributeName,

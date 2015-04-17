@@ -32,11 +32,9 @@ public class NoSqlController {
 	/*
 	 * Put new Item in no SQL
 	 * */	
-	@Path("{item}")
+	@Path("insert")
 	@PUT
-	public String insertItem(@PathParam("item") String item,
-			@PathParam("tableName") String tableName,
-			@QueryParam("authKey") String authKey){
+	public String insertItem(@QueryParam("authKey") String authKey){
 		System.out.println("AuthKey from query: "+authKey);
 		keyId = authFacade.isValidKey(authKey);
 		if(keyId > 0)
@@ -46,9 +44,10 @@ public class NoSqlController {
 			myMap = authFacade.getLogInfo(keyId);
 			
 			System.out.println("Start is " + logger.getStart());
-			System.out
-				.println("Inside NoSQLController - insertItem() with params:" + item);
-		
+		//	System.out
+		//		.println("Inside NoSQLController - insertItem() with params:" + item);
+		String item = "test";
+		String tableName = "test";
 		noSqlFacade.insertItem(item, tableName);
 		logger.setEnd(new Date());
 		System.out.println("ENd is " + logger.getEnd());
