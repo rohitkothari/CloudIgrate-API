@@ -32,10 +32,13 @@ public class NoSqlController {
 	/*
 	 * Put new Item in no SQL
 	 * */	
-	@Path("insert")
+	@Path("item")
 	@PUT
-	public String insertItem(@QueryParam("authKey") String authKey){
+	public String insertItem(@QueryParam("authKey") String authKey,
+			@QueryParam("attributeName") String attributeName,
+			@QueryParam("attributeValue") String attributeValue){
 		System.out.println("AuthKey from query: "+authKey);
+		String noSqlKey = null;
 		keyId = authFacade.isValidKey(authKey);
 		if(keyId > 0)
 		{
@@ -46,9 +49,7 @@ public class NoSqlController {
 			System.out.println("Start is " + logger.getStart());
 		//	System.out
 		//		.println("Inside NoSQLController - insertItem() with params:" + item);
-		String item = "test";
-		String tableName = "test";
-		noSqlFacade.insertItem(item, tableName);
+		noSqlKey= noSqlFacade.insertItem(attributeName, attributeValue);
 		logger.setEnd(new Date());
 		System.out.println("ENd is " + logger.getEnd());
 		
@@ -58,7 +59,7 @@ public class NoSqlController {
 	        logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "insertItem", "AWS", "nosql", "PaaS");
 	        iterator.remove(); // avoids a ConcurrentModificationException
 	    }
-		return "Item inserted successfuly";
+		return noSqlKey;
 		}
 		return "Key is Invalid";
 	}
@@ -66,13 +67,12 @@ public class NoSqlController {
 	/*
 	 * Get new Item from no SQL
 	 * */
-	@Path("{item}")
+	@Path("item")
 	@GET
-	public String getItem(@PathParam("tableName") String tableName,
-			@PathParam("attributeName") String attributeName,
-			@PathParam("attributeValue") String attributeValue,
+	public String getItem(@QueryParam("keyValue") String keyValue,
 			@QueryParam("authKey") String authKey) {
 		keyId = authFacade.isValidKey(authKey);
+		String jsonItems = null;
 		if(keyId > 0)
 		{
 		logger = Logger.getInstance();
@@ -81,8 +81,8 @@ public class NoSqlController {
 			
 			System.out.println("Start is " + logger.getStart());
 			System.out
-				.println("Inside NoSQLController - insertItem() with params:" + tableName);
-				noSqlFacade.getItem(tableName, attributeName, attributeValue);
+				.println("Inside NoSQLController - insertItem() with params:" + keyValue);
+				jsonItems = noSqlFacade.getItem(keyValue);
 				logger.setEnd(new Date());
 				System.out.println("ENd is " + logger.getEnd());
 				
@@ -92,7 +92,7 @@ public class NoSqlController {
 			        logger.writeLogger(pair.getKey().toString(), pair.getValue().toString(), "getItem", "AWS", "nosql", "PaaS");
 			        iterator.remove(); // avoids a ConcurrentModificationException
 			    }
-				return "Getting item successfully";
+				return jsonItems;
 	}
 	return "Key is Invalid";
 }

@@ -5,7 +5,12 @@ package cloudigrate.api.implementation;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.List;
+import java.util.Map;
 
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.services.datastore.client.DatastoreException;
 
 import cloudigrate.api.domain.Platform;
@@ -15,22 +20,22 @@ import cloudigrate.api.implementation.google.GoogleNoSql;
 
 public class NoSqlImpl {
 
-	public void insertItem(String item, String tableName, CloudPlatform cloudPlatform) throws GeneralSecurityException, IOException, DatastoreException {
+	public String insertItem(String attributeName, String attributeValue, CloudPlatform cloudPlatform) throws GeneralSecurityException, IOException, DatastoreException {
 		// TODO Auto-generated method stub
-		
+		String key = null;
 		//switch(Platform.getInstance().getPlatformValue("nosql")) {
 		switch(cloudPlatform) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
 			AWSNoSql awsNoSql = new AWSNoSql();
-			awsNoSql.insertItem(item, tableName);
+			key = awsNoSql.insertItem(attributeName, attributeValue);
 			break;
 
 		case GOOGLE: 
 			System.out.println("Control going inside cloudigrate.api.implementation.google");
 			GoogleNoSql googleNoSql = new GoogleNoSql();
-			googleNoSql.insertItem(item, tableName);
+			googleNoSql.insertItem(attributeName, attributeValue);
 			break;
 
 		default:
@@ -38,22 +43,33 @@ public class NoSqlImpl {
 			System.out.println("Please verify your FACADE for CloudPlatform enum");
 			break;
 		}
+		return key;
 	}
 
-	public void getItem(String tableName, String attributeName,
-			String attributeValue) throws DatastoreException, GeneralSecurityException, IOException {
-		switch(Platform.getInstance().getPlatformValue("nosql")) {
+	public String getItem(String keyValue, CloudPlatform cloudPlatform) throws DatastoreException, GeneralSecurityException, IOException {
+		List<Map<String, AttributeValue>> attributes = null;
+		String jsonString= null;
+		//switch(Platform.getInstance().getPlatformValue("nosql")) {
+		switch(cloudPlatform){
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
 			AWSNoSql awsNoSql = new AWSNoSql();
-			awsNoSql.getItem(tableName, attributeName, attributeValue);
+			attributes = awsNoSql.getItem(keyValue);
+			ObjectMapper objMapper = new ObjectMapper();
+			try {
+				jsonString = objMapper.writeValueAsString(attributes);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//List<Map<String, AttributeValue>> getItem(String keyValue)
 			break;
 
 		case GOOGLE: 
 			System.out.println("Control going inside cloudigrate.api.implementation.google");
 			GoogleNoSql googleNoSql = new GoogleNoSql();
-			googleNoSql.getItem(tableName, attributeName, attributeValue);
+			googleNoSql.getItem("", "", keyValue);
 			break;
 
 		default:
@@ -62,6 +78,7 @@ public class NoSqlImpl {
 			break;
 		}
 		// TODO Auto-generated method stub
+		return jsonString;
 	}
 	
 	/*public void deleteItem(String tableName, String attributeName, String attributeValue, CloudPlatform cloudPlatform) throws GeneralSecurityException, IOException

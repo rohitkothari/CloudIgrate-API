@@ -3,14 +3,13 @@
  * */
 package cloudigrate.api.implementation.aws;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-
-
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
@@ -22,7 +21,6 @@ import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Table;*/
 import com.amazonaws.auth.AWSCredentials;
-
 
 public class AWSNoSql {
 
@@ -42,30 +40,33 @@ public class AWSNoSql {
 			dynamoDB.setRegion(usWest2);
 		}
 
-		public void insertItem(String item1, String tableName) {
+		public String insertItem(String attributeName, String attributeValue) {
 			Map<String, AttributeValue> item = new HashMap<String, AttributeValue>();
 			
-			item.put("Id", new AttributeValue().withS("11"));
-			item.put("CustomerId", new AttributeValue().withS("8965"));
+			UUID idOne = UUID.randomUUID();
+			item.put("Id", new AttributeValue().withS(idOne.toString()));
+			item.put(attributeName, new AttributeValue().withS(attributeValue));
 			
 			@SuppressWarnings("deprecation")
 			PutItemRequest putItemRequest = new PutItemRequest("CloudIgrate", item);
 			@SuppressWarnings("deprecation")
 			PutItemResult putItemResult = dynamoDB.putItem(putItemRequest);	
 			System.out.println("Item inserted");
+			return idOne.toString();
 		}
 
-		public void getItem(String tableName, String attributeName,
-				String attributeValue) {
+		public List<Map<String, AttributeValue>> getItem(String keyValue) {
 			HashMap<String, Condition> scanFilter = new HashMap<String, Condition>();
 			@SuppressWarnings("deprecation")
 			Condition condition = new Condition().withComparisonOperator(
 			ComparisonOperator.GT.toString()).withAttributeValueList(
-					new AttributeValue().withN(attributeValue));
-			scanFilter.put(attributeName, condition);
-			ScanRequest scanRequest = new ScanRequest(tableName)
+					new AttributeValue().withS(keyValue));
+			scanFilter.put("Id", condition);
+			ScanRequest scanRequest = new ScanRequest("CloudIgrate")
 					.withScanFilter(scanFilter);
 			ScanResult scanResult = dynamoDB.scan(scanRequest);
+			List<Map<String, AttributeValue>> attributes = scanResult.getItems();
+			return attributes;
 		}
 		
 		/*public void deleteItem(String tableName, String attributeName, String attributeValue)

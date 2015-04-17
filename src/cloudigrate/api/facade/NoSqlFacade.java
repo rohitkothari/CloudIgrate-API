@@ -5,7 +5,9 @@ package cloudigrate.api.facade;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+
 import cloudigrate.api.domain.Platform;
+
 import javax.ws.rs.PathParam;
 
 import com.google.api.services.datastore.client.DatastoreException;
@@ -30,8 +32,9 @@ public class NoSqlFacade {
 		NoSqlImpl noSqlImpl = new NoSqlImpl();
 		
 		public String insertItem(String item, String tableName){
+			String key = null;
 			try {
-				noSqlImpl.insertItem(item, tableName, cloudPlatform);
+				key = noSqlImpl.insertItem(item, tableName, cloudPlatform);
 			} catch (GeneralSecurityException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -42,14 +45,14 @@ public class NoSqlFacade {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return item;
+			return key;
 		}
 
-		public void getItem(String tableName, String attributeName,
-				String attributeValue) {
+		public String getItem(String keyValue) {
+			String jsonItems = null;
 			// TODO Auto-generated method stub
 			try {
-				noSqlImpl.getItem(tableName, attributeName, attributeValue);
+				jsonItems = noSqlImpl.getItem(keyValue, cloudPlatform);
 			} catch (DatastoreException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -60,6 +63,7 @@ public class NoSqlFacade {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			return jsonItems;
 		}
 		
 		/*public void deleteItem(String tableName, String attributeName, String attributeValue)
