@@ -20,4 +20,8 @@ public class DashboardFacade {
 		// TODO Auto-generated method stub
 		return dashboardImpl.getServiceDashboard(service);
 	}
+	
+	public String getBillingDashboard() {
+		return dashboardImpl.getBillingDashboard();
+	}
 }

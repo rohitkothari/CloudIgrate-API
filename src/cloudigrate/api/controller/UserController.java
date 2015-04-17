@@ -24,4 +24,12 @@ public class UserController {
 		DashboardFacade dashboardFacade = new DashboardFacade();
 		return dashboardFacade.getServiceDashboard(service);
 	}
+	
+	@Path("dashboard/billing")
+	@GET
+	public String getBillingDashboard()
+	{
+		DashboardFacade dashboardFacade = new DashboardFacade();
+		return dashboardFacade.getBillingDashboard();
+	}
 }
