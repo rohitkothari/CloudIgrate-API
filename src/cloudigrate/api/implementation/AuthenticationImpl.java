@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cloudigrate.api.domain.Platform;
+import cloudigrate.api.domain.Platform.CloudPlatform;
+
 import com.mysql.jdbc.Statement;
 
 public class AuthenticationImpl {
@@ -15,6 +18,10 @@ public class AuthenticationImpl {
 	private static String dbUsername = "clouduser";
 	private static String dbPassword = "clouduser";
 	
+	public enum CloudPlatform {
+		AWS, GOOGLE
+	}
+		
 	private Connection getConnection()
 	{
 		Connection connection = null;
@@ -62,6 +69,7 @@ public class AuthenticationImpl {
 		 
 		return keyId;
 	}
+	
 
 		public HashMap<String, String> getLogInfo(int keyId)
 		{
@@ -111,5 +119,79 @@ public class AuthenticationImpl {
 			
 			return userName;
 			
+		}
+
+		public CloudPlatform getPreference(String service) {
+			// TODO Auto-generated method stub
+			Connection connection = null;
+			String query = null;
+			String provider = null;
+			try {
+				connection = getConnection();
+			        Statement statement = (Statement) connection.createStatement();
+			        query = "SELECT provider FROM CloudIgrate.preferences WHERE service='" + service + "';"; 
+			        statement.executeQuery(query);
+			        ResultSet resultSet = statement.getResultSet();
+			        if (resultSet.next()) {
+			        	provider = resultSet.getString("provider");
+					        connection.close();
+			        }
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+			
+			return getPlatformValue(provider);
+		}
+
+
+		public CloudPlatform getPlatformValue(String level)
+		{
+			if(level.equals("AWS"))
+				return CloudPlatform.AWS;
+			else if(level.equals("GOOGLE"))
+				return CloudPlatform.GOOGLE;
+			return null;
+		}
+		
+		public void setPreference(String service, String provider) {
+			// TODO Auto-generated method stub
+			Connection connection = null;
+			String query = null;
+			try {
+				connection = getConnection();
+				Statement statement = (Statement) connection.createStatement();
+				query = "UPDATE CloudIgrate.preferences SET provider='" + provider + "' WHERE service= '"+ service +"';";
+				// Update CloudIgrate.preferences set provider = 'GOOGLE' where service = 'sql';
+				statement.executeUpdate(query);
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+		}
+
+		public HashMap<String, String> getPreference() {
+			// TODO Auto-generated method stub
+			Connection connection = null;
+			String query = null;
+			HashMap<String, String> preferencesMap = new HashMap<String, String>();
+			ArrayList<Platform> allPreferences = new ArrayList<Platform>();
+			Platform p = null;
+			try {
+					connection = getConnection();
+			        Statement statement = (Statement) connection.createStatement();
+			        query = "SELECT * FROM CloudIgrate.preferences;"; 
+			        statement.executeQuery(query);
+			        ResultSet resultSet = statement.getResultSet();
+			        int counter = 0;
+			        while(resultSet.next()){
+			        	System.out.println(counter++);
+			        	preferencesMap.put(resultSet.getString("service"), resultSet.getString("provider"));
+			        	//allPreferences.add(new Platform());
+			        	//Platform(String storage, String sql, String nosql, String instance)
+			        }
+			        connection.close();
+			    } catch (SQLException e) {
+			        e.printStackTrace();
+			    }
+			return preferencesMap;
 		}
 }

@@ -3,26 +3,33 @@
  */
 
 package cloudigrate.api.implementation;
-
-import cloudigrate.api.facade.SqlFacade.CloudPlatform;
 import cloudigrate.api.implementation.aws.*;
 import cloudigrate.api.implementation.google.GoogleSql;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 public class SqlImpl {
 
-	public String getUserName(CloudPlatform cloudPlatform){
+	AuthenticationImpl authenticationImpl = null;
+	
+	// ENUM to restrict cloud platform provider - You can just add new Cloud Platform Provider here in future
+			public enum CloudPlatform {
+				AWS, GOOGLE
+			}
+			
+			public SqlImpl()
+			{
+				authenticationImpl = new AuthenticationImpl();
+			}
+			
+			//authenticationImpl.getPreference("nosql")
+			
+	public String getUserName(){
 
-		System.out.println("Inside SqlImpl - getUserName() "+cloudPlatform);
 		String userName=null;
 		/* Business logic implementation
 		 * Switch-case usage to implement operations related to cloud platform
 		 */
 
-		switch(cloudPlatform) {
+		switch(authenticationImpl.getPreference("sql")) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
@@ -42,15 +49,14 @@ public class SqlImpl {
 		return userName;
 	}
 
-	public String getUserPassword(CloudPlatform cloudPlatform) {
+	public String getUserPassword() {
 
-		System.out.println("Inside SqlImpl - getUserPassword() "+cloudPlatform);
 		String userPassword=null;
 		/* Business logic implementation
 		 * Switch-case usage to implement operations related to cloud platform
 		 */
 
-		switch(cloudPlatform) {
+		switch(authenticationImpl.getPreference("sql")) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
@@ -70,14 +76,13 @@ public class SqlImpl {
 		return userPassword;
 	}
 
-	public String getConnectionString(CloudPlatform cloudPlatform) {
-		System.out.println("Inside SqlImpl - getConnectionString() "+cloudPlatform);
+	public String getConnectionString() {
 		String connectionString=null;
 		/* Business logic implementation
 		 * Switch-case usage to implement operations related to cloud platform
 		 */
 
-		switch(cloudPlatform) {
+		switch(authenticationImpl.getPreference("sql")) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");

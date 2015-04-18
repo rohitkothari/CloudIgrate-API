@@ -18,20 +18,7 @@ public class SqlFacade {
 	 *		1. Amazon Web Services
 	 *		2. Google Cloud Platform
 	 */
-
-	// ENUM to restrict cloud platform provider - You can just add new Cloud Platform Provider here in future
-	public enum CloudPlatform {
-		AWS, GOOGLE
-	}
-	private static CloudPlatform cloudPlatform;
-
-
-	// Constructor that sets a particular Cloud Platform Provider 
-	public SqlFacade() {
-		//this.cloudPlatform = cloudPlatform.AWS;
-		this.cloudPlatform = cloudPlatform.AWS;
-	}
-
+	
 	SqlImpl sqlImpl = new SqlImpl();
 
 	/*
@@ -40,18 +27,18 @@ public class SqlFacade {
 	public String getUserName() {
 		System.out.println("Inside SqlFacade - getUserName()");
 		// Invoke SqlImpl's getUserName() method
-		return  sqlImpl.getUserName(cloudPlatform);
+		return  sqlImpl.getUserName();
 	}	
 	
 	public String getUserPassword() {
 		System.out.println("Inside SqlFacade - getUserPassword()");
 		// Invoke SqlImpl's getUserPassword() method
-		return sqlImpl.getUserPassword(cloudPlatform);		
+		return sqlImpl.getUserPassword();		
 	}
 	
 	public String getConnectionString() {
 		System.out.println("Inside SqlFacade - getConnectionString()");
 		// Invoke SqlImpl's createBucket() method
-		return sqlImpl.getConnectionString(cloudPlatform);		
+		return sqlImpl.getConnectionString();		
 	}
 }

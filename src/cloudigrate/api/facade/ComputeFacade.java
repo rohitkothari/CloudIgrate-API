@@ -17,30 +17,16 @@ public class ComputeFacade {
 	 *		2. Google Cloud Platform
 	 */
 	
-	// ENUM to restrict cloud platform provider - You can just add new Cloud Platform Provider here in future
-	public enum CloudPlatform {
-		AWS, GOOGLE
-	}
-	private static CloudPlatform cloudPlatform;
-	
-	
-	public ComputeFacade() {
-		this.cloudPlatform = cloudPlatform.AWS;
-		//this.cloudPlatform = cloudPlatform.GOOGLE;
-	}
-	
 	ComputeImpl computeimpl = new ComputeImpl();
-	
 	
 	public String createVM(String vmname, String vmdescription){
 		System.out.println("inside computefacade of createVM");
-		return computeimpl.createVM(vmname,vmdescription,cloudPlatform);
-		
+		return computeimpl.createVM(vmname,vmdescription);
 	}
 	
 	public void stopVM(String instanceId){
 		System.out.println("inside computefacade of stop vm");
-		computeimpl.stopVM(instanceId, cloudPlatform);
+		computeimpl.stopVM(instanceId);
 	}
 
 	/**
@@ -49,7 +35,7 @@ public class ComputeFacade {
 	public void terminateInstance(String instanceId) {
 		// TODO Auto-generated method stub
 		System.out.println("inside computefacade of instance terminate vm");
-		computeimpl.terminateInstance(instanceId, cloudPlatform);
+		computeimpl.terminateInstance(instanceId);
 		
 	}
 

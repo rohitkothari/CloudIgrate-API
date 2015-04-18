@@ -3,9 +3,7 @@
  */
 
 package cloudigrate.api.implementation;
-
-import cloudigrate.api.facade.StorageFacade.CloudPlatform;
-import cloudigrate.api.implementation.aws.*;
+import cloudigrate.api.implementation.aws.AWSStorage;
 import cloudigrate.api.implementation.google.GoogleStorage;
 
 import java.io.File;
@@ -13,16 +11,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class StorageImpl {
-
-	public void createBucket(String bucketName, CloudPlatform cloudPlatform){
-
-		System.out.println("Inside StorageImpl - createBucket() with params:"+bucketName+","+cloudPlatform);
+	AuthenticationImpl authenticationImpl = null;
+	
+	public StorageImpl()
+	{
+		authenticationImpl = new AuthenticationImpl();
+	}
+	
+	public void createBucket(String bucketName){
 
 		/* Business logic implementation
 		 * Switch-case usage to implement operations related to cloud platform
 		 */
 
-		switch(cloudPlatform) {
+		switch(authenticationImpl.getPreference("storage")) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
@@ -43,15 +45,14 @@ public class StorageImpl {
 		}
 	}
 	
-	public void uploadObject(String bucketName, String keyName, File object, CloudPlatform cloudPlatform){
+	public void uploadObject(String bucketName, String keyName, File object){
 
-		System.out.println("Inside StorageImpl - uploadObject() with params:"+bucketName+","+cloudPlatform);
 
 		/* Business logic implementation
 		 * Switch-case usage to implement operations related to cloud platform
 		 */
 
-		switch(cloudPlatform) {
+		switch(authenticationImpl.getPreference("storage")) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
@@ -72,15 +73,14 @@ public class StorageImpl {
 		}
 	}
 
-	public File downloadObject(String bucketName, String keyName, String downloadPath, CloudPlatform cloudPlatform) throws FileNotFoundException, IOException{
+	public File downloadObject(String bucketName, String keyName, String downloadPath) throws FileNotFoundException, IOException{
 
-		System.out.println("Inside StorageImpl - uploadObject() with params:"+bucketName+","+cloudPlatform);
 		File object = null;
 		/* Business logic implementation
 		 * Switch-case usage to implement operations related to cloud platform
 		 */
 
-		switch(cloudPlatform) {
+		switch(authenticationImpl.getPreference("storage")) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
@@ -103,15 +103,14 @@ public class StorageImpl {
 		return object;
 	}
 	
-	public void deleteObject(String bucketName, String keyName, CloudPlatform cloudPlatform){
+	public void deleteObject(String bucketName, String keyName){
 
-		System.out.println("Inside StorageImpl - deleteObject() with params:"+bucketName+","+keyName+","+cloudPlatform);
 
 		/* Business logic implementation
 		 * Switch-case usage to implement operations related to cloud platform
 		 */
 
-		switch(cloudPlatform) {
+		switch(authenticationImpl.getPreference("storage")) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");

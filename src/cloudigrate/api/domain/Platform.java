@@ -9,25 +9,57 @@ import java.util.Properties;
 
 public class Platform {
 	
-	private static Platform platform = null;
-	HashMap<String, String> platformValues = null;
+	public Platform(String storage, String sql, String nosql, String instance)
+	{
+		this.instance = instance;
+		this.storage = storage;
+		this.nosql = nosql;
+		this.sql =sql;
+	}
+	
+	String storage;
+	public String getStorage() {
+		return storage;
+	}
+
+	public void setStorage(String storage) {
+		this.storage = storage;
+	}
+
+	public String getSql() {
+		return sql;
+	}
+
+	public void setSql(String sql) {
+		this.sql = sql;
+	}
+
+	public String getNosql() {
+		return nosql;
+	}
+
+	public void setNosql(String nosql) {
+		this.nosql = nosql;
+	}
+
+	public void setInstance(String instance) {
+		this.instance = instance;
+	}
+
+	String sql;
+	String nosql;
+	String instance;
+	
 	
 	public enum CloudPlatform {
 		AWS, GOOGLE
 	}
 	
-	protected Platform()
+	public Platform()
 	{
-		platformValues = new HashMap<String, String>();
-		loadAllPlatforms();
+		//platformValues = new HashMap<String, String>();
+		//loadAllPlatforms();
 	}
-	
-	public static Platform getInstance() {
-	      if(platform == null) {
-	    	  platform = new Platform();
-	      }
-	      return platform;
-	   }
 	
 	public void setPlatformValue(String level, String platform)
 	{
@@ -54,43 +86,5 @@ public class Platform {
 		}
  
 	}
-	}
-	
-	public void loadAllPlatforms()
-	{
-		Properties prop = new Properties();
-		InputStream input = null;
-	 
-		try {
-			input = new FileInputStream("config.properties");
-	 
-			// load a properties file
-			prop.load(input);
-	 
-			// get the property value and print it out
-			platformValues.put("sql", prop.getProperty("sql"));
-			platformValues.put("storage", prop.getProperty("sql"));
-			platformValues.put("nosql", prop.getProperty("sql"));
-			platformValues.put("instance", prop.getProperty("sql"));
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-	
-	public CloudPlatform getPlatformValue(String level)
-	{
-		if(platformValues.get(level).equals("AWS"))
-			return CloudPlatform.AWS;
-		else if(platformValues.get(level).equals("GOOGLE"))
-			return CloudPlatform.GOOGLE;
-		return null;
 	}
 }

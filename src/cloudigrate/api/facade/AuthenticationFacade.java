@@ -1,6 +1,7 @@
 package cloudigrate.api.facade;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import cloudigrate.api.implementation.AuthenticationImpl;
 
@@ -20,11 +21,22 @@ public class AuthenticationFacade {
 		return authenticationImpl.getLogInfo(keyId);
 	}
 	
+	
 	public String decodeKey(String encodedKey)
 	{
 		// Decode data on other side, by processing encoded data
 		byte[] valueDecoded= org.apache.commons.codec.binary.Base64.decodeBase64(encodedKey);
 		System.out.println("Decoded value is " + new String(valueDecoded));
 		return new String(valueDecoded);
+	}
+
+	public void setPlatformValue(String level, String value) {
+		// TODO Auto-generated method stub
+		authenticationImpl.setPreference(level, value);
+	}
+
+	public Map<String, String> getPlatformValues() {
+		// TODO Auto-generated method stub
+		return authenticationImpl.getPreference();
 	}
 }

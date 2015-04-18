@@ -19,19 +19,6 @@ public class StorageFacade {
 	 *		2. Google Cloud Platform
 	 */
 
-	// ENUM to restrict cloud platform provider - You can just add new Cloud Platform Provider here in future
-	public enum CloudPlatform {
-		AWS, GOOGLE
-	}
-	private static CloudPlatform cloudPlatform;;
-
-
-	// Constructor that sets a particular Cloud Platform Provider 
-	public StorageFacade() {
-		//this.cloudPlatform = cloudPlatform.AWS;
-		this.cloudPlatform = cloudPlatform.AWS;
-	}
-
 	StorageImpl storageImpl = new StorageImpl();
 
 	/*
@@ -40,7 +27,7 @@ public class StorageFacade {
 	public void createBucket(String bucketName) {
 		System.out.println("Inside StorageFacade - createBucket() with params:"+bucketName);
 		// Invoke StorageImpl's createBucket() method
-		storageImpl.createBucket(bucketName, cloudPlatform);
+		storageImpl.createBucket(bucketName);
 	}
 	
 	/*
@@ -49,7 +36,7 @@ public class StorageFacade {
 	public void uploadObject(String bucketName, String keyName, File object) {
 		System.out.println("Inside StorageFacade - uploadObject() with params:"+bucketName);
 		// Invoke StorageImpl's createBucket() method
-		storageImpl.uploadObject(bucketName, keyName, object, cloudPlatform);
+		storageImpl.uploadObject(bucketName, keyName, object);
 		
 	}
 	
@@ -59,7 +46,7 @@ public class StorageFacade {
 	public File downloadObject(String bucketName, String keyName, String downloadPath) throws FileNotFoundException, IOException {
 		System.out.println("Inside StorageFacade - downloadObject() with params: downloading "+keyName+" from "+bucketName);
 		// Invoke StorageImpl's downloadObject() method
-		File object = storageImpl.downloadObject(bucketName, keyName, downloadPath, cloudPlatform);
+		File object = storageImpl.downloadObject(bucketName, keyName, downloadPath);
 		return object;
 	}
 	
@@ -69,7 +56,7 @@ public class StorageFacade {
 	public void deleteObject(String bucketName, String keyName) {
 		System.out.println("Inside StorageFacade - deleteObject() with params: deleting "+keyName+" from "+bucketName);
 		// Invoke StorageImpl's createBucket() method
-		storageImpl.deleteObject(bucketName, keyName, cloudPlatform);
+		storageImpl.deleteObject(bucketName, keyName);
 		
 	}
 }

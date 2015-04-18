@@ -14,17 +14,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.services.datastore.client.DatastoreException;
 
 import cloudigrate.api.domain.Platform;
-import cloudigrate.api.facade.NoSqlFacade.CloudPlatform;
 import cloudigrate.api.implementation.aws.AWSNoSql;
 import cloudigrate.api.implementation.google.GoogleNoSql;
 
 public class NoSqlImpl {
 
-	public String insertItem(String attributeName, String attributeValue, CloudPlatform cloudPlatform) throws GeneralSecurityException, IOException, DatastoreException {
+	AuthenticationImpl authenticationImpl = null;
+	
+	// ENUM to restrict cloud platform provider - You can just add new Cloud Platform Provider here in future
+			public enum CloudPlatform {
+				AWS, GOOGLE
+			}
+			
+			public NoSqlImpl()
+			{
+				authenticationImpl = new AuthenticationImpl();
+			}
+			
+			//authenticationImpl.getPreference("nosql")
+	
+	public String insertItem(String attributeName, String attributeValue) throws GeneralSecurityException, IOException, DatastoreException {
 		// TODO Auto-generated method stub
 		String key = null;
 		//switch(Platform.getInstance().getPlatformValue("nosql")) {
-		switch(cloudPlatform) {
+		switch(authenticationImpl.getPreference("nosql")) {
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
@@ -46,11 +59,11 @@ public class NoSqlImpl {
 		return key;
 	}
 
-	public String getItem(String keyValue, CloudPlatform cloudPlatform) throws DatastoreException, GeneralSecurityException, IOException {
+	public String getItem(String keyValue) throws DatastoreException, GeneralSecurityException, IOException {
 		List<Map<String, AttributeValue>> attributes = null;
 		String jsonString= null;
 		//switch(Platform.getInstance().getPlatformValue("nosql")) {
-		switch(cloudPlatform){
+		switch(authenticationImpl.getPreference("nosql")){
 
 		case AWS: 
 			System.out.println("Control going inside cloudigrate.api.implementation.aws");
