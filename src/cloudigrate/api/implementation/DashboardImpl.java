@@ -217,11 +217,10 @@ public class DashboardImpl {
 						iaaSCount++;
 					}else if(logEntry.getLevel().equals("SaaS"))
 					{
-						paaSCount++;
-						
+						saaSCount++;
 					}else if(logEntry.getLevel().equals("PaaS"))
 					{
-						saaSCount++;
+						paaSCount++;
 					}
 				}
 			}

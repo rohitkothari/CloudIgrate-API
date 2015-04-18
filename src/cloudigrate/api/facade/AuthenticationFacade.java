@@ -4,10 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cloudigrate.api.implementation.AuthenticationImpl;
+import cloudigrate.api.implementation.MigrationImpl;
 
 public class AuthenticationFacade {
 
 	AuthenticationImpl authenticationImpl = new AuthenticationImpl();
+	MigrationImpl migrationImpl= new MigrationImpl();
 	String decodedKey = null;
 	
 	public int isValidKey(String key)
@@ -31,7 +33,16 @@ public class AuthenticationFacade {
 	}
 
 	public void setPlatformValue(String level, String value) {
-		// TODO Auto-generated method stub
+		if(level.equals("sql") && !value.equals(authenticationImpl.getPreference("sql"))){
+			System.out.println("********* SQL MIGRATION TIME ***********" + value);
+		}else if(level.equals("nosql") && !value.equals(authenticationImpl.getPreference("nosql"))){
+			System.out.println("********* NOSQL MIGRATION TIME ***********"+ value);
+		}else if(level.equals("storage") && !value.equals(authenticationImpl.getPreference("storage"))){
+			System.out.println("********* STORAGE MIGRATION TIME ***********"+ value);
+		}else if(level.equals("instance") && !value.equals(authenticationImpl.getPreference("instance"))){
+			System.out.println("********* INSTANCE MIGRATION TIME ***********"+ value);
+		}
+		
 		authenticationImpl.setPreference(level, value);
 	}
 
