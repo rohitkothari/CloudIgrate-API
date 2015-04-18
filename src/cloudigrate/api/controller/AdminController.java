@@ -49,4 +49,27 @@ public class AdminController {
 		return dashboardFacade.getDashboardData();
 	}
 	
+	@Path("dashboard/serviceaverage")
+	@GET
+	public String getServiceAverage()
+	{
+		DashboardFacade dashboardFacade = new DashboardFacade();
+		return dashboardFacade.getAdminServiceAverage();
+	}
+	
+	@Path("dashboard/servicecount")
+	@GET
+	public String getServiceCount()
+	{
+		DashboardFacade dashboardFacade = new DashboardFacade();
+		return dashboardFacade.getAdminServiceCount();
+	}
+	
+	@Path("dashboard/levelcount")
+	@GET
+	public String getLavelCount()
+	{
+		DashboardFacade dashboardFacade = new DashboardFacade();
+		return dashboardFacade.getAdminLevelCount();
+	}
 }

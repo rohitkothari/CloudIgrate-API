@@ -30,11 +30,19 @@ public class DashboardImpl {
 	HashMap<String, Integer> countServiceMap = null;
 	HashMap<String, Integer> countLevelMap = null;
 	
+	HashMap<String, Long> averageUserMap = null;
+	HashMap<String, Integer> countServiceUserMap = null;
+	HashMap<String, Integer> countLevelUserMap = null;
+	
 	public DashboardImpl()
 	{
 		averageMap = new HashMap<String, Long>();
 		countServiceMap = new HashMap<String, Integer>();
 		countLevelMap = new HashMap<String, Integer>();
+		
+		averageUserMap = new HashMap<String, Long>();
+		countServiceUserMap = new HashMap<String, Integer>();
+		countLevelUserMap = new HashMap<String, Integer>();
 		
 		logEntries = new ArrayList<LogEntry>();
 		//Windows log file
@@ -173,6 +181,73 @@ public class DashboardImpl {
 			e.printStackTrace();
 		}
 		return jsonString;
+	}
+	
+	private void fillInUserData(String userName)
+	{
+		if(averageUserMap.size() == 0 && countServiceUserMap.size() == 0 && countLevelUserMap.size() == 0)
+		{
+			int storageCount=0, sqlCount=0, nosqlCount=0, instanceCount=0;
+			long storageSum=0, sqlSum=0, nosqlSum=0, instanceSum=0;
+			int iaaSCount=0, paaSCount=0, saaSCount=0;
+			LogEntry logEntry = null;
+			for(Iterator<LogEntry> it=logEntries.iterator();it.hasNext();){
+				if(it.next().getUserName().equals(userName)){
+					logEntry = it.next();
+					if(logEntry.getService().equals("storage"))
+					{
+						storageCount++;
+						storageSum = storageSum + logEntry.getTimestamp();
+					}else if(logEntry.getService().equals("sql"))
+					{
+						sqlCount++;
+						sqlSum = sqlSum + logEntry.getTimestamp();
+					}else if(logEntry.getService().equals("nosql"))
+					{
+						nosqlCount++;
+						nosqlSum = nosqlSum + logEntry.getTimestamp();
+					}else  if(logEntry.getService().equals("instance"))
+					{
+						instanceCount++;
+						instanceSum = instanceSum + logEntry.getTimestamp();
+					}
+					
+					if(logEntry.getLevel().equals("IaaS"))
+					{
+						iaaSCount++;
+					}else if(logEntry.getLevel().equals("SaaS"))
+					{
+						paaSCount++;
+						
+					}else if(logEntry.getLevel().equals("PaaS"))
+					{
+						saaSCount++;
+					}
+				}
+			}
+			
+			countServiceUserMap.put("storage", storageCount);
+			countServiceUserMap.put("sql", sqlCount);
+			countServiceUserMap.put("nosql", nosqlCount);
+			countServiceUserMap.put("instance", instanceCount);
+			
+			countLevelUserMap.put("IaaS", iaaSCount);
+			countLevelUserMap.put("PaaS", paaSCount);
+			countLevelUserMap.put("SaaS", saaSCount);
+			
+			if(storageCount != 0)
+				averageUserMap.put("storage", storageSum/storageCount);
+			if(sqlCount != 0)
+				averageUserMap.put("sql", sqlSum/sqlCount);
+			if(nosqlCount != 0)
+				averageUserMap.put("nosql", nosqlSum/nosqlCount);
+			if(instanceCount != 0)
+				averageUserMap.put("instance", instanceSum/instanceCount);
+		}
+		else{
+			return;
+		}
+		
 	}
 
 	public String getServiceDashboard(String service) {
@@ -441,6 +516,42 @@ public class DashboardImpl {
 	}
 
 	public String getServiceAverage(String userName) {
+		fillInUserData(userName);
+		String jsonString = null;
+		ObjectMapper objMapper = new ObjectMapper();
+		try {
+			jsonString = objMapper.writeValueAsString(averageUserMap);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return jsonString;
+	}
+
+	public String getServiceCount(String userName) {
+		fillInUserData(userName);
+		String jsonString = null;
+		ObjectMapper objMapper = new ObjectMapper();
+		try {
+			jsonString = objMapper.writeValueAsString(countServiceUserMap);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return jsonString;
+	}
+	
+	public String getLevelCount(String userName) {
+		fillInUserData(userName);
+		String jsonString = null;
+		ObjectMapper objMapper = new ObjectMapper();
+		try {
+			jsonString = objMapper.writeValueAsString(countLevelUserMap);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return jsonString;
+	}
+
+	public String getAdminServiceAverage() {
 		String jsonString = null;
 		ObjectMapper objMapper = new ObjectMapper();
 		try {
@@ -451,7 +562,7 @@ public class DashboardImpl {
 		return jsonString;
 	}
 
-	public String getServiceCount(String userName) {
+	public String getAdminServiceCount() {
 		String jsonString = null;
 		ObjectMapper objMapper = new ObjectMapper();
 		try {
@@ -461,8 +572,8 @@ public class DashboardImpl {
 		}
 		return jsonString;
 	}
-	
-	public String getLevelCount(String userName) {
+
+	public String getAdminLevelCount() {
 		String jsonString = null;
 		ObjectMapper objMapper = new ObjectMapper();
 		try {

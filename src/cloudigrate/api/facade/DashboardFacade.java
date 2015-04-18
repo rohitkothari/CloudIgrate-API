@@ -42,4 +42,19 @@ public class DashboardFacade {
 		// TODO Auto-generated method stub
 		return dashboardImpl.getLevelCount(userName);
 	}
+
+	public String getAdminServiceAverage() {
+		// TODO Auto-generated method stub
+		return dashboardImpl.getAdminServiceAverage();
+	}
+
+	public String getAdminServiceCount() {
+		// TODO Auto-generated method stub
+		return dashboardImpl.getAdminServiceCount();
+	}
+
+	public String getAdminLevelCount() {
+		// TODO Auto-generated method stub
+		return dashboardImpl.getAdminLevelCount();
+	}
 }
