@@ -4,7 +4,12 @@ import cloudigrate.api.implementation.DashboardImpl;
 
 public class DashboardFacade {
 
-	DashboardImpl dashboardImpl = new DashboardImpl();
+	DashboardImpl dashboardImpl = null;
+	
+	public DashboardFacade()
+	{
+		dashboardImpl = new DashboardImpl();
+	}
 	
 	public String getDashboardData()
 	{
@@ -12,16 +17,29 @@ public class DashboardFacade {
 	}
 
 	public String getUserDashboard(String username) {
-		// TODO Auto-generated method stub
 		return dashboardImpl.getUserDashboard(username);
 	}
 
 	public String getServiceDashboard(String service) {
-		// TODO Auto-generated method stub
 		return dashboardImpl.getServiceDashboard(service);
 	}
 	
 	public String getBillingDashboard() {
 		return dashboardImpl.getBillingDashboard();
+	}
+
+	public String getServiceAverage(String userName) {
+		// TODO Auto-generated method stub
+		return dashboardImpl.getServiceAverage(userName);
+	}
+
+	public String getServiceCount(String userName) {
+		// TODO Auto-generated method stub
+		return dashboardImpl.getServiceCount(userName);
+	}
+
+	public String getLevelCount(String userName) {
+		// TODO Auto-generated method stub
+		return dashboardImpl.getLevelCount(userName);
 	}
 }

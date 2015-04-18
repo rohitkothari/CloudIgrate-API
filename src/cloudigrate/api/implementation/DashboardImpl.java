@@ -26,9 +26,16 @@ public class DashboardImpl {
 
 	//C:\Users\Vaibhav
 	ArrayList<LogEntry> logEntries = null;
+	HashMap<String, Long> averageMap = null;
+	HashMap<String, Integer> countServiceMap = null;
+	HashMap<String, Integer> countLevelMap = null;
 	
 	public DashboardImpl()
 	{
+		averageMap = new HashMap<String, Long>();
+		countServiceMap = new HashMap<String, Integer>();
+		countLevelMap = new HashMap<String, Integer>();
+		
 		logEntries = new ArrayList<LogEntry>();
 		//Windows log file
 				String csvFile = "C://Users//Vaibhav//log.txt";
@@ -38,20 +45,74 @@ public class DashboardImpl {
 				BufferedReader br = null;
 				String line = "";
 				String cvsSplitBy = ",";
-				
+				intitializeMaps();
 				String jsonString = null;
-			 
+				int tempVal= 0;
+				int storageCount=0, sqlCount=0, nosqlCount=0, instanceCount=0;
+				long storageSum=0, sqlSum=0, nosqlSum=0, instanceSum=0;
+				int iaaSCount=0, paaSCount=0, saaSCount=0;
+				
 				try {
 					br = new BufferedReader(new FileReader(csvFile));
 					while ((line = br.readLine()) != null) {
 						System.out.println("Line is" + line);
 						// use comma as separator
 						String[] entries = line.split(cvsSplitBy);
-						System.out.println("Count is"+ entries.length);
+						
 						if(entries.length > 2)
+						{
+							System.out.println(entries[8]);
+							if(entries[8].equals("storage"))
+							{
+								storageCount++;
+								storageSum = storageSum + Long.parseLong(entries[6]);
+							}else if(entries[8].equals("sql"))
+							{
+								sqlCount++;
+								sqlSum = sqlSum + Long.parseLong(entries[6]);
+							}else if(entries[8].equals("nosql"))
+							{
+								nosqlCount++;
+								nosqlSum = nosqlSum + Long.parseLong(entries[6]);
+							}else  if(entries[8].equals("instance"))
+							{
+								instanceCount++;
+								instanceSum = instanceSum + Long.parseLong(entries[6]);
+							}
+							
+							if(entries[3].equals("IaaS"))
+							{
+								iaaSCount++;
+							}else if(entries[3].equals("SaaS"))
+							{
+								paaSCount++;
+								
+							}else if(entries[3].equals("PaaS"))
+							{
+								saaSCount++;
+							}
+							
+						// public LogEntry(String u, String f, String p, String l, String s, String e, long t, String a, String sv)	
 						logEntries.add(new LogEntry(entries[0], entries[1], entries[2], entries[3],entries[4], entries[5], Long.parseLong(entries[6]), entries[7], entries[8]));
+						}
 					}
-				
+					countServiceMap.put("storage", storageCount);
+					countServiceMap.put("sql", sqlCount);
+					countServiceMap.put("nosql", nosqlCount);
+					countServiceMap.put("instance", instanceCount);
+					
+					countLevelMap.put("IaaS", iaaSCount);
+					countLevelMap.put("IaaS", paaSCount);
+					countLevelMap.put("IaaS", saaSCount);
+					
+					if(storageCount != 0)
+					averageMap.put("storage", storageSum/storageCount);
+					if(sqlCount != 0)
+					averageMap.put("sql", sqlSum/sqlCount);
+					if(nosqlCount != 0)
+					averageMap.put("nosql", nosqlSum/nosqlCount);
+					if(instanceCount != 0)
+					averageMap.put("instance", instanceSum/instanceCount);
 			}
 				catch (FileNotFoundException e) {
 					e.printStackTrace();
@@ -66,10 +127,25 @@ public class DashboardImpl {
 						}
 					}
 				}
-			 
 				System.out.println("Done");
 	}
 	
+	private void intitializeMaps() {
+		averageMap.put("sql", (long) 0);
+		averageMap.put("nosql", (long) 0);
+		averageMap.put("storage", (long) 0);
+		averageMap.put("instance", (long) 0);
+		
+		countServiceMap.put("sql", 0);
+		countServiceMap.put("nosql", 0);
+		countServiceMap.put("storage", 0);
+		countServiceMap.put("instance", 0);
+		
+		countLevelMap.put("PaaS", 0);
+		countLevelMap.put("SaaS", 0);
+		countLevelMap.put("IaaS", 0);
+	}
+
 	public String getDashboardData()
 	{
 		String jsonString = null;
@@ -77,7 +153,6 @@ public class DashboardImpl {
 		try {
 			jsonString = objMapper.writeValueAsString(logEntries);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return jsonString;
@@ -95,15 +170,12 @@ public class DashboardImpl {
 		try {
 			jsonString = objMapper.writeValueAsString(logEntries);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return jsonString;
 	}
 
 	public String getServiceDashboard(String service) {
-		// TODO Auto-generated method stub
-		
 		for(Iterator<LogEntry> it=logEntries.iterator();it.hasNext();){
 			if(!it.next().getService().equals(service))
 				it.remove();
@@ -114,7 +186,6 @@ public class DashboardImpl {
 		try {
 			jsonString = objMapper.writeValueAsString(logEntries);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return jsonString;
@@ -367,5 +438,38 @@ public class DashboardImpl {
 		
 		
 		return result1;
+	}
+
+	public String getServiceAverage(String userName) {
+		String jsonString = null;
+		ObjectMapper objMapper = new ObjectMapper();
+		try {
+			jsonString = objMapper.writeValueAsString(averageMap);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return jsonString;
+	}
+
+	public String getServiceCount(String userName) {
+		String jsonString = null;
+		ObjectMapper objMapper = new ObjectMapper();
+		try {
+			jsonString = objMapper.writeValueAsString(countServiceMap);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return jsonString;
+	}
+	
+	public String getLevelCount(String userName) {
+		String jsonString = null;
+		ObjectMapper objMapper = new ObjectMapper();
+		try {
+			jsonString = objMapper.writeValueAsString(countLevelMap);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return jsonString;
 	}
 }

@@ -3,6 +3,7 @@ package cloudigrate.api.controller;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 import cloudigrate.api.facade.DashboardFacade;
 
@@ -31,5 +32,29 @@ public class UserController {
 	{
 		DashboardFacade dashboardFacade = new DashboardFacade();
 		return dashboardFacade.getBillingDashboard();
+	}
+	
+	@Path("dashboard/serviceaverage")
+	@GET
+	public String getServiceAverage(@QueryParam("userName") String userName)
+	{
+		DashboardFacade dashboardFacade = new DashboardFacade();
+		return dashboardFacade.getServiceAverage(userName);
+	}
+	
+	@Path("dashboard/servicecount")
+	@GET
+	public String getServiceCount(@QueryParam("userName") String userName)
+	{
+		DashboardFacade dashboardFacade = new DashboardFacade();
+		return dashboardFacade.getServiceCount(userName);
+	}
+	
+	@Path("dashboard/levelcount")
+	@GET
+	public String getLavelCount(@QueryParam("userName") String userName)
+	{
+		DashboardFacade dashboardFacade = new DashboardFacade();
+		return dashboardFacade.getLevelCount(userName);
 	}
 }
