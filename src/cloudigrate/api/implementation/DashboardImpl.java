@@ -115,7 +115,7 @@ public class DashboardImpl {
 					countServiceMap.put("sql", sqlCount);
 					countServiceMap.put("nosql", nosqlCount);
 					countServiceMap.put("instance", instanceCount);
-					
+					System.out.println("################ PaaS: "+paaSCount);
 					countLevelMap.put("IaaS", iaaSCount);
 					countLevelMap.put("PaaS", paaSCount);
 					countLevelMap.put("SaaS", saaSCount);
@@ -192,42 +192,55 @@ public class DashboardImpl {
 	
 	private void fillInUserData(String userName)
 	{
+		System.out.println("Size of log entries" + logEntries.size());
 		if(averageUserMap.size() == 0 && countServiceUserMap.size() == 0 && countLevelUserMap.size() == 0)
 		{
 			int storageCount=0, sqlCount=0, nosqlCount=0, instanceCount=0;
 			long storageSum=0, sqlSum=0, nosqlSum=0, instanceSum=0;
 			int iaaSCount=0, paaSCount=0, saaSCount=0;
 			LogEntry logEntry = null;
-			for(Iterator<LogEntry> it=logEntries.iterator();it.hasNext();){
-				if(it.next().getUserName().equals(userName)){
-					logEntry = it.next();
+			Iterator<LogEntry> it=logEntries.iterator();
+			int i =0;
+			System.out.println("Size of log entries inside" + logEntries.size());
+			while(i < logEntries.size()){
+				//logEntry = it.next();
+				logEntry = logEntries.get(i); i++;
+				System.out.println("Username" + userName);
+				if(logEntry.getUserName().equals(userName)){
 					if(logEntry.getService().equals("storage"))
 					{
 						storageCount++;
+						System.out.println("storageCount" + storageCount);
 						storageSum = storageSum + logEntry.getTimestamp();
 					}else if(logEntry.getService().equals("sql"))
 					{
 						sqlCount++;
+						System.out.println("sqlCount" + sqlCount);
 						sqlSum = sqlSum + logEntry.getTimestamp();
 					}else if(logEntry.getService().equals("nosql"))
 					{
 						nosqlCount++;
+						System.out.println("nosqlCount" + nosqlCount);
 						nosqlSum = nosqlSum + logEntry.getTimestamp();
 					}else  if(logEntry.getService().equals("instance"))
 					{
 						instanceCount++;
+						System.out.println("instanceCount" + instanceCount);
 						instanceSum = instanceSum + logEntry.getTimestamp();
 					}
 					
 					if(logEntry.getLevel().equals("IaaS"))
 					{
 						iaaSCount++;
+						System.out.println("iaaSCount" + iaaSCount);
 					}else if(logEntry.getLevel().equals("SaaS"))
 					{
 						saaSCount++;
+						System.out.println("saaSCount" + saaSCount);
 					}else if(logEntry.getLevel().equals("PaaS"))
 					{
 						paaSCount++;
+						System.out.println("paaSCount" + paaSCount);
 					}
 				}
 			}
@@ -549,7 +562,12 @@ public class DashboardImpl {
 		fillInUserData(userName);
 		String jsonString = null;
 		ObjectMapper objMapper = new ObjectMapper();
+		System.out.print("countLevelMap Count is" + countLevelUserMap.size());
 		try {
+			System.out.println("IaaS :" + countLevelUserMap.get("IaaS"));
+			System.out.println("SaaS :" + countLevelUserMap.get("SaaS"));		
+			System.out.println("PaaS :" + countLevelUserMap.get("PaaS"));		
+		
 			jsonString = objMapper.writeValueAsString(countLevelUserMap);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
