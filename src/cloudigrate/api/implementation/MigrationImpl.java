@@ -39,9 +39,9 @@ public class MigrationImpl {
 		{
 			// Google to AWS
 			//Take backup from Google
-			String createBackupCommand = "/usr/local/mysql/bin/mysqldump -h173.194.254.105 -uroot -proot --port=3306 --single-transaction --routines --triggers --databases cloudigrate -r /tmp/mysql-dump.sql";
+			String createBackupCommand = "/usr/local/mysql/bin/mysqldump -h173.194.254.105 -ucloudigrate -pcloudigrate --port=3306 --single-transaction --routines --triggers --databases cloudigrate -r /tmp/mysql-dump.sql";
 			//Send backup to AWS
-			String restoreBackupCommand[] = {"tcsh","-c", "/usr/local/mysql/bin/mysql -h cloudigrate.c3fher2linu7.us-west-1.rds.amazonaws.com -u cloudigrate -pcloudigrate --port=3306 < /tmp/mysql-dump.sql"};
+			String restoreBackupCommand[] = {"tcsh","-c", "/usr/local/mysql/bin/mysql -h cloudigrate.c7babyv2jgia.us-west-2.rds.amazonaws.com -u cloudigrate -pcloudigrate --port=3306 < /tmp/mysql-dump.sql"};
 
 			// Taking backup from source database
 			String createBackupOutput = executeCreateBackupCommand(createBackupCommand);		
@@ -55,9 +55,9 @@ public class MigrationImpl {
 		{
 			// AWS to Google
 			//Take backup from AWS
-			String createBackupCommand = "/usr/local/mysql/bin/mysqldump -hcloudigrate.c3fher2linu7.us-west-1.rds.amazonaws.com -ucloudigrate -pcloudigrate --port=3306 --single-transaction --routines --triggers --databases cloudigrate -r /tmp/mysql-dump.sql";
+			String createBackupCommand = "/usr/local/mysql/bin/mysqldump -hcloudigrate.c7babyv2jgia.us-west-2.rds.amazonaws.com -ucloudigrate -pcloudigrate --port=3306 --single-transaction --routines --triggers --databases cloudigrate -r /tmp/mysql-dump.sql";
 			//Send backup to Google
-			String restoreBackupCommand[] = {"tcsh","-c", "/usr/local/mysql/bin/mysql -h 173.194.254.105 -u root -proot --port=3306 < /tmp/mysql-dump.sql"};
+			String restoreBackupCommand[] = {"tcsh","-c", "/usr/local/mysql/bin/mysql -h 173.194.254.105 -u cloudigrate -pcloudigrate --port=3306 < /tmp/mysql-dump.sql"};
 
 			// Taking backup from source database
 			String createBackupOutput = executeCreateBackupCommand(createBackupCommand);		

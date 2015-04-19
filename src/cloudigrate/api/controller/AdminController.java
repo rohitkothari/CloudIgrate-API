@@ -38,6 +38,7 @@ public class AdminController {
 	@POST
 	public String setPlatform(@QueryParam("level") String level,
 			@QueryParam("value") String value) {
+		System.out.println("Inside AdminController - setPlatform");
 		authenticationFacade.setPlatformValue(level, value);
 		return "Setting platform successfully";
 	}

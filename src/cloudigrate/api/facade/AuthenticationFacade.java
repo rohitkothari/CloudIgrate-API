@@ -33,6 +33,7 @@ public class AuthenticationFacade {
 	}
 
 	public void setPlatformValue(String level, String value) {
+		System.out.println("Inside AuthenticationFacade");
 		if(level.equals("sql") && !value.equals(authenticationImpl.getPreference("sql").toString())){
 			System.out.println("********* SQL MIGRATION TIME ***********" + value + " preferences value" + authenticationImpl.getPreference("nosql"));
 			migrationImpl.migrateSQL(value);
