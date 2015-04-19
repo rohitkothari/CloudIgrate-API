@@ -33,14 +33,14 @@ public class AuthenticationFacade {
 	}
 
 	public void setPlatformValue(String level, String value) {
-		if(level.equals("sql") && !value.equals(authenticationImpl.getPreference("sql"))){
-			System.out.println("********* SQL MIGRATION TIME ***********" + value);
-		}else if(level.equals("nosql") && !value.equals(authenticationImpl.getPreference("nosql"))){
-			System.out.println("********* NOSQL MIGRATION TIME ***********"+ value);
-		}else if(level.equals("storage") && !value.equals(authenticationImpl.getPreference("storage"))){
-			System.out.println("********* STORAGE MIGRATION TIME ***********"+ value);
-		}else if(level.equals("instance") && !value.equals(authenticationImpl.getPreference("instance"))){
-			System.out.println("********* INSTANCE MIGRATION TIME ***********"+ value);
+		if(level.equals("sql") && !value.equals(authenticationImpl.getPreference("sql").toString())){
+			System.out.println("********* SQL MIGRATION TIME ***********" + value + " preferences value" + authenticationImpl.getPreference("nosql"));
+		}else if(level.equals("nosql") && !(value.equals(authenticationImpl.getPreference("nosql").toString()))){
+						System.out.println("********* NOSQL MIGRATION TIME ***********"+ value + " preferences value" + authenticationImpl.getPreference("nosql"));
+		}else if(level.equals("storage") && !value.equals(authenticationImpl.getPreference("storage").toString())){
+			System.out.println("********* STORAGE MIGRATION TIME ***********"+ value + " preferences value" + authenticationImpl.getPreference("nosql"));
+		}else if(level.equals("instance") && !value.equals(authenticationImpl.getPreference("instance").toString())){
+			System.out.println("********* INSTANCE MIGRATION TIME ***********"+ value + " preferences value" + authenticationImpl.getPreference("nosql"));
 		}
 		
 		authenticationImpl.setPreference(level, value);
