@@ -35,12 +35,16 @@ public class AuthenticationFacade {
 	public void setPlatformValue(String level, String value) {
 		if(level.equals("sql") && !value.equals(authenticationImpl.getPreference("sql").toString())){
 			System.out.println("********* SQL MIGRATION TIME ***********" + value + " preferences value" + authenticationImpl.getPreference("nosql"));
+			migrationImpl.migrateSQL(value);
 		}else if(level.equals("nosql") && !(value.equals(authenticationImpl.getPreference("nosql").toString()))){
 						System.out.println("********* NOSQL MIGRATION TIME ***********"+ value + " preferences value" + authenticationImpl.getPreference("nosql"));
+						migrationImpl.migrateNOSQL(value);
 		}else if(level.equals("storage") && !value.equals(authenticationImpl.getPreference("storage").toString())){
 			System.out.println("********* STORAGE MIGRATION TIME ***********"+ value + " preferences value" + authenticationImpl.getPreference("nosql"));
+			migrationImpl.migrateStorage(value);
 		}else if(level.equals("instance") && !value.equals(authenticationImpl.getPreference("instance").toString())){
 			System.out.println("********* INSTANCE MIGRATION TIME ***********"+ value + " preferences value" + authenticationImpl.getPreference("nosql"));
+			migrationImpl.migrateInstance(value);
 		}
 		
 		authenticationImpl.setPreference(level, value);

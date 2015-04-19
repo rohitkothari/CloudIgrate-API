@@ -69,35 +69,42 @@ public class DashboardImpl {
 						
 						if(entries.length > 2)
 						{
+							System.out.print(entries);
 							System.out.println(entries[8]);
 							if(entries[8].equals("storage"))
 							{
 								storageCount++;
+								System.out.println("storageCount" + storageCount);
 								storageSum = storageSum + Long.parseLong(entries[6]);
 							}else if(entries[8].equals("sql"))
 							{
 								sqlCount++;
+								System.out.println("sqlCount" + sqlCount);
 								sqlSum = sqlSum + Long.parseLong(entries[6]);
 							}else if(entries[8].equals("nosql"))
 							{
 								nosqlCount++;
+								System.out.println("nosqlCount" + nosqlCount);
 								nosqlSum = nosqlSum + Long.parseLong(entries[6]);
 							}else  if(entries[8].equals("instance"))
 							{
 								instanceCount++;
+								System.out.println("instanceCount" + instanceCount);
 								instanceSum = instanceSum + Long.parseLong(entries[6]);
 							}
 							
 							if(entries[3].equals("IaaS"))
 							{
 								iaaSCount++;
-							}else if(entries[3].equals("SaaS"))
-							{
-								paaSCount++;
-								
+								System.out.println("iaaSCount" + iaaSCount);
 							}else if(entries[3].equals("PaaS"))
 							{
+								paaSCount++;
+								System.out.println("paaSCount" + paaSCount);
+							}else if(entries[3].equals("SaaS"))
+							{
 								saaSCount++;
+								System.out.println("saaSCount" + saaSCount);
 							}
 							
 						// public LogEntry(String u, String f, String p, String l, String s, String e, long t, String a, String sv)	
@@ -110,8 +117,8 @@ public class DashboardImpl {
 					countServiceMap.put("instance", instanceCount);
 					
 					countLevelMap.put("IaaS", iaaSCount);
-					countLevelMap.put("IaaS", paaSCount);
-					countLevelMap.put("IaaS", saaSCount);
+					countLevelMap.put("PaaS", paaSCount);
+					countLevelMap.put("SaaS", saaSCount);
 					
 					if(storageCount != 0)
 					averageMap.put("storage", storageSum/storageCount);
@@ -553,6 +560,7 @@ public class DashboardImpl {
 	public String getAdminServiceAverage() {
 		String jsonString = null;
 		ObjectMapper objMapper = new ObjectMapper();
+		System.out.print("averageMap Count is" + averageMap.size());
 		try {
 			jsonString = objMapper.writeValueAsString(averageMap);
 		} catch (JsonProcessingException e) {
@@ -564,6 +572,7 @@ public class DashboardImpl {
 	public String getAdminServiceCount() {
 		String jsonString = null;
 		ObjectMapper objMapper = new ObjectMapper();
+		System.out.print("countServiceMap Count is" + countServiceMap.size());
 		try {
 			jsonString = objMapper.writeValueAsString(countServiceMap);
 		} catch (JsonProcessingException e) {
@@ -575,7 +584,11 @@ public class DashboardImpl {
 	public String getAdminLevelCount() {
 		String jsonString = null;
 		ObjectMapper objMapper = new ObjectMapper();
+		System.out.print("countLevelMap Count is" + countLevelMap.size());
 		try {
+			System.out.println("IaaS :" + countLevelMap.get("IaaS"));
+			System.out.println("SaaS :" + countLevelMap.get("SaaS"));		
+			System.out.println("PaaS :" + countLevelMap.get("PaaS"));		
 			jsonString = objMapper.writeValueAsString(countLevelMap);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
