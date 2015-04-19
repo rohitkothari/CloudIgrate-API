@@ -46,10 +46,10 @@ public class DashboardImpl {
 		
 		logEntries = new ArrayList<LogEntry>();
 		//Windows log file
-				String csvFile = "C://Users//Vaibhav//log.txt";
+				//String csvFile = "C://Users//Vaibhav//log.txt";
 				
 				//Mac log file
-				//String csvFile = "/tmp/log.txt";
+				String csvFile = "/tmp/log.txt";
 				BufferedReader br = null;
 				String line = "";
 				String cvsSplitBy = ",";
@@ -299,7 +299,7 @@ public class DashboardImpl {
 				HashMap<String, AWSServiceBillItem> awsServiceBillItemMap = new HashMap<String, AWSServiceBillItem>();
 				HashMap<String, AWSServiceRateItem> awsServiceRateItemMap = new HashMap<String, AWSServiceRateItem>();
 				//initialize FileReader object
-				fileReader = new FileReader("/Users/rohietkothari/Desktop/aws-billing-vb.csv");
+				fileReader = new FileReader("/tmp/aws-billing-vb.csv");
 
 				//initialize CSVParser object
 				csvFileParser = new CSVParser(fileReader, csvFileFormat);
